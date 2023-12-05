@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\theor\\source\\repos\\TheoLeCodeurPro\\MOTSGLISSES\\motsglisses\\motsglisses.csproj",
+      "projectUniqueName": "C:\\Users\\theor\\source\\repos\\TheoLeCodeurPro\\MOTSGLISSES\\motsglisses.csproj",
       "projectName": "motsglisses",
-      "projectPath": "C:\\Users\\theor\\source\\repos\\TheoLeCodeurPro\\MOTSGLISSES\\motsglisses\\motsglisses.csproj",
+      "projectPath": "C:\\Users\\theor\\source\\repos\\TheoLeCodeurPro\\MOTSGLISSES\\motsglisses.csproj",
       "packagesPath": "C:\\Users\\theor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\theor\\source\\repos\\TheoLeCodeurPro\\MOTSGLISSES\\motsglisses\\obj\\",
+      "outputPath": "C:\\Users\\theor\\source\\repos\\TheoLeCodeurPro\\MOTSGLISSES\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\theor\\AppData\\Roaming\\NuGet\\NuGet.Config",
