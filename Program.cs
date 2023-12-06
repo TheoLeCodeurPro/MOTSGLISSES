@@ -4,9 +4,7 @@
     {
         static void Main(string[] args)
         {
-            fdf
-                hjk
-                iughozrhgoijrijg
+           testc 10
             // esessfd
             Console.WriteLine("Hello, World!");
         }
