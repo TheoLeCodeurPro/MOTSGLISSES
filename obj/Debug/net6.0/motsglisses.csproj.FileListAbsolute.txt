@@ -1,0 +1,4 @@
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.AssemblyInfoInputs.cache
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.AssemblyInfo.cs
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.csproj.CoreCompileInputs.cache
