@@ -28,7 +28,7 @@ namespace motsglisses
             {
                 motss += ", " + m;
             }
-            return "Nom : " + this.nom + "\nMots trouvés : " + motss + "\nScore : " + score; 
+            return "Nom : " + this.nom + "\nMots trouvés : " + motss + "\nScore : " + this.score; 
         }
         public void Add_Score(int valeur)
         {
