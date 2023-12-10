@@ -2,3 +2,13 @@ C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsgli
 C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.AssemblyInfoInputs.cache
 C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.AssemblyInfo.cs
 C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.csproj.CoreCompileInputs.cache
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\bin\Debug\net6.0\motsglisses.exe
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\bin\Debug\net6.0\motsglisses.deps.json
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\bin\Debug\net6.0\motsglisses.runtimeconfig.json
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\bin\Debug\net6.0\motsglisses.dll
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\bin\Debug\net6.0\motsglisses.pdb
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.dll
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\refint\motsglisses.dll
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.pdb
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\motsglisses.genruntimeconfig.cache
+C:\Users\theor\source\repos\TheoLeCodeurPro\MOTSGLISSES\obj\Debug\net6.0\ref\motsglisses.dll

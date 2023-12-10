@@ -9,25 +9,30 @@ namespace motsglisses
     internal class Joueur
     {
         string nom;
-        string[] mots;
+        List<string> mots;
         int score;
         public Joueur(string nom)
         {
             this.nom = nom;
-            this.mots = new string[0];
+            this.mots = new List<string>();
             this.score = 0;
         }
         public void Add_Mot(string mot) 
         {
-            this.mots[this.mots.Length + 1] = mot;
+            mot = mot.ToUpper();
+            this.mots.Add(mot);
         }
         public string toString()
         {
             string motss = "";
-            foreach (string m in this.mots) 
+            if (this.mots.Count > 0) 
             {
-                motss += ", " + m;
+                foreach (string m in this.mots)
+                {
+                    motss += m + ", ";
+                }
             }
+            
             return "Nom : " + this.nom + "\nMots trouvés : " + motss + "\nScore : " + this.score; 
         }
         public void Add_Score(int valeur)
@@ -36,7 +41,8 @@ namespace motsglisses
         }
         public bool Contient(string mot) 
         {
-            for (int i = 0; i<this.mots.Length; i++)
+            mot = mot.ToUpper();
+            for (int i = 0; i<this.mots.Count; i++)
             {
                 if (this.mots[i]==mot)
                 { 
@@ -45,5 +51,6 @@ namespace motsglisses
             }
             return false;
         }
+
     }
 }

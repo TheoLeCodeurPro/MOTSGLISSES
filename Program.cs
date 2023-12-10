@@ -4,7 +4,17 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Joueur Joueur1 = new Joueur("Théo");
+            
+            Joueur1.Add_Mot("Bonjour");
+            Joueur1.Add_Mot("Adieu");
+            Joueur1.Add_Score(15);
+            Console.WriteLine(Joueur1.toString());
+            string MotTeste =  "theo";
+            Console.WriteLine($"{MotTeste} déja utilisé? {Joueur1.Contient(MotTeste)}");
+
+            Dictionnaire Dico = new Dictionnaire("C:/Users/theor/source/repos/TheoLeCodeurPro/MOTSGLISSES/Mots_Français.txt");
+            Console.WriteLine(Dico.toString());
         }
     }
 }
