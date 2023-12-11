@@ -49,30 +49,33 @@ namespace motsglisses
             char premiereLettre = mot[0];
             if (this.motsParLettre.ContainsKey(premiereLettre))
             {
-                string mots = "toto";//this.motsParLettre[premiereLettre];
+                List<string> mots = this.motsParLettre[premiereLettre];
                 int debut = 0;
-                int fin = 2; //mots.Count - 1;
-                while (debut <= fin)
-                {
-                    int milieu = (debut + fin) / 2;
-                    int comparaison = mots[milieu].CompareTo(mot);
-                    if (comparaison == 0)
-                    {
-                        return true; // Mot trouvé
-                    }
-                    else if (comparaison < 0)
-                    {
-                        debut = milieu + 1;
-                    }
-                    else
-                    {
-                        fin = milieu - 1;
-                    }
-                }
+                int fin = mots.Count - 1;
+                return RechRec(mots);
             }
-            return false; // Mot non trouvé
         }
-        public void Tri_XXX()
+        public bool RechRec(mot, debut = 0, fin = mot.Count - 1)
+        {
+            int milieu = (debut + fin) / 2;
+            int comparaison = mots[milieu].CompareTo(mot);
+            if (comparaison == 0)
+            {
+                return true; // Mot trouvé
+            }
+            else if (comparaison < 0)
+            {
+                RechRec(mot, milieu + 1, fin);
+            }
+            else
+            {
+                RechRec(mot, debut, milieu - 1);
+            }
+        }
+    }
+        return false; // Mot non trouvé
+        }
+public void Tri_XXX()
         {
 
         }
