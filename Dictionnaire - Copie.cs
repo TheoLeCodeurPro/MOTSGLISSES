@@ -52,30 +52,29 @@ namespace motsglisses
                 List<string> mots = this.motsParLettre[premiereLettre];
                 int debut = 0;
                 int fin = mots.Count - 1;
-                return RechRec(mots);
+                return RechRec(mot, debut, fin);
             }
+            return false;
         }
-        public bool RechRec(mot, debut = 0, fin = mot.Count - 1)
+        public bool RechRec(string mot, int debut, int fin)
         {
             int milieu = (debut + fin) / 2;
-            int comparaison = mots[milieu].CompareTo(mot);
+            int comparaison = mot[milieu].CompareTo(mot);
             if (comparaison == 0)
             {
-                return true; // Mot trouvé
+                return true; // Mot trouvÃ©
             }
             else if (comparaison < 0)
             {
-                RechRec(mot, milieu + 1, fin);
+                return RechRec(mot, milieu + 1, fin);
             }
             else
             {
-                RechRec(mot, debut, milieu - 1);
+                return RechRec(mot, debut, milieu - 1);
             }
         }
-    }
-        return false; // Mot non trouvé
-        }
-public void Tri_XXX()
+
+        public void Tri_XXX()
         {
 
         }
