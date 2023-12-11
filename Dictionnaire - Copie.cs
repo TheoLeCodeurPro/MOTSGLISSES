@@ -32,23 +32,26 @@ namespace motsglisses
         }
         public string toString()
         {
+            string msg = "FR : ";
             for (char c = 'A'; c <= 'Z'; c++)
             {
                 //Console.WriteLine(c);
-                Console.WriteLine(c + " : " + this.motsParLettre[c][0]); 
+                //Console.WriteLine(c + " : " + this.motsParLettre[c]);
+                int nBDeMots = this.motsParLettre[c][0].Count(t => t == ' ');
+                msg += c + ":" + nBDeMots.ToString() + ",";
             }
-            
-            return "";
+
+            return msg;
         }
-        
+
         public bool RechercherMot(string mot)
         {
             char premiereLettre = mot[0];
             if (this.motsParLettre.ContainsKey(premiereLettre))
             {
-                List<string> mots = this.motsParLettre[premiereLettre];
+                string mots = "toto";//this.motsParLettre[premiereLettre];
                 int debut = 0;
-                int fin = mots.Count - 1;
+                int fin = 2; //mots.Count - 1;
                 while (debut <= fin)
                 {
                     int milieu = (debut + fin) / 2;
