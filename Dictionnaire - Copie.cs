@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +8,10 @@ namespace motsglisses
 {
     internal class Dictionnaire
     {
-        private Dictionary<char, string> motsParLettre;
+        private Dictionary<char, List<string>> motsParLettre;
         public Dictionnaire(string cheminFichier)
         {
-            this.motsParLettre = new Dictionary<char, string>();
+            this.motsParLettre = new Dictionary<char, List<string>>();
             ChargerDictionnaire(cheminFichier);
         }
         private void ChargerDictionnaire(string cheminFichier)
@@ -25,24 +24,21 @@ namespace motsglisses
                     char premiereLettre = ligne[0];
                     if (!this.motsParLettre.ContainsKey(premiereLettre))
                     {
-                        this.motsParLettre[premiereLettre] = "";
+                        this.motsParLettre[premiereLettre] = new List<string>();
                     }
-                    this.motsParLettre[premiereLettre]+=ligne;
+                    this.motsParLettre[premiereLettre].Add(ligne);
                 }
             }
         }
         public string toString()
         {
-            string msg = "FR : ";
             for (char c = 'A'; c <= 'Z'; c++)
             {
                 //Console.WriteLine(c);
-                //Console.WriteLine(c + " : " + this.motsParLettre[c]);
-                int nBDeMots = this.motsParLettre[c].Count(t => t == ' ');
-                msg += c + ":" + nBDeMots.ToString() + ",";
+                Console.WriteLine(c + " : " + this.motsParLettre[c][0]); 
             }
             
-            return msg;
+            return "";
         }
         
         public bool RechercherMot(string mot)
@@ -50,9 +46,9 @@ namespace motsglisses
             char premiereLettre = mot[0];
             if (this.motsParLettre.ContainsKey(premiereLettre))
             {
-                string mots = "toto";//this.motsParLettre[premiereLettre];
+                List<string> mots = this.motsParLettre[premiereLettre];
                 int debut = 0;
-                int fin = 2; //mots.Count - 1;
+                int fin = mots.Count - 1;
                 while (debut <= fin)
                 {
                     int milieu = (debut + fin) / 2;
