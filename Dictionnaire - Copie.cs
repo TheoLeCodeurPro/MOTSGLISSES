@@ -74,7 +74,26 @@ namespace motsglisses
             }
         }
 
-        public void Tri_XXX()
+        public void Tri_Fusion()
+        {
+            if (this.motsParLettre.Count <= 1)
+                return;
+            else
+            {
+                int millieu = this.motsParLettre.Count / 2;
+                List<string> listegauche = new List<string>();
+                List<string> listedroite = new List<string>();
+                for (int i = 0; i+millieu <= this.motsParLettre.Count; i++) 
+                {
+                    listegauche.Add(this.motsParLettre[i]);
+                    listedroite.Add(this.motsParLettre[i+millieu]);
+                }
+                Tri_Fusion(listegauche);
+                Tri_Fusion(listedroite);
+                Tri_Fusion(listegauche, listedroite, this.motsParLettre)
+            }
+        }
+        public void Tri_Fusion(List<string> listegauche, List<string> listedroite, List<string> listeFinal)
         {
 
         }
