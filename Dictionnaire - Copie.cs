@@ -51,12 +51,12 @@ namespace motsglisses
                 List<string> mots = this.Dico[premiereLettre];
                 int debut = 0;
                 int fin = mots.Count - 1;
-                return RechRec(mot, debut, fin);
+                return RechRec(mots, mot, debut, fin);
             }
             return false;
         }
 
-        public bool RechRec(string mot, int debut, int fin)
+        public bool RechRec(List<string> mots, string mot, int debut, int fin)
         {
             if (debut <= fin)
             {
@@ -68,11 +68,11 @@ namespace motsglisses
                 }
                 else if (comparaison < 0)
                 {
-                    return RechRec(mot, milieu + 1, fin);
+                    return RechRec(mots, mot, milieu + 1, fin);
                 }
                 else
                 {
-                    return RechRec(mot, debut, milieu - 1);
+                    return RechRec(mots, mot, debut, milieu - 1);
                 }
             }
             return false;
@@ -81,27 +81,30 @@ namespace motsglisses
         public void Tri_Fusion()
         {
             for (char c = 'A'; c <= 'Z'; c++)
+                Tri_Fusion1(this.Dico[c]);
+        }
+        public void Tri_Fusion1(List<string> liste)
+        {
+        if (liste.Count <= 1)
+            return;
+        else
+        {
+            int millieu = liste.Count / 2;
+            List<string> listegauche = new List<string>();
+            List<string> listedroite = new List<string>();
+            for (int i = 0; i < millieu; i++)
             {
-                if (this.Dico[c].Count <= 1)
-                    return;
-                else
-                {
-                    int millieu = this.Dico[c].Count / 2;
-                    List<string> listegauche = new List<string>();
-                    List<string> listedroite = new List<string>();
-                    for (int i = 0; i < millieu; i++)
-                    {
-                        listegauche.Add(this.Dico[c][i]);
-                    }
-                    for (int i = millieu; i < this.Dico[c].Count; i++)
-                    {
-                        listedroite.Add(this.Dico[c]);
-                    }
-                    Tri_Fusion(listegauche);
-                    Tri_Fusion(listedroite);
-                    Tri_Fusion2(listegauche, listedroite, liste);
-                }
+                listegauche.Add(liste[i]);
             }
+            for (int i = millieu; i < liste.Count; i++)
+            {
+                listedroite.Add(liste[i]);
+            }
+            Tri_Fusion1(listegauche);
+            Tri_Fusion1(listedroite);
+            Tri_Fusion2(listegauche, listedroite, liste);
+        }
+    }
 
         public void Tri_Fusion2(List<string> listegauche, List<string> listedroite, List<string> listeFinale)
         {
