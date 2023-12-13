@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace motsglisses
 {
     internal class Dictionnaire
     {
         private Dictionary<char, List<string>> Dico;
+
         public Dictionnaire(string cheminFichier)
         {
             this.Dico = new Dictionary<char, List<string>>();
             ChargerDictionnaire(cheminFichier);
         }
+
         private void ChargerDictionnaire(string cheminFichier)
         {
             using (StreamReader lecteur = new StreamReader(cheminFichier))
@@ -30,13 +30,12 @@ namespace motsglisses
                 }
             }
         }
-        public string toString()
+
+        public string ToString()
         {
             string msg = "FR : ";
             for (char c = 'A'; c <= 'Z'; c++)
             {
-                //Console.WriteLine(c);
-                //Console.WriteLine(c + " : " + this.Dico[c]);
                 int nBDeMots = this.Dico[c][0].Count(t => t == ' ');
                 msg += c + ":" + nBDeMots.ToString() + ",";
             }
@@ -56,49 +55,55 @@ namespace motsglisses
             }
             return false;
         }
+
         public bool RechRec(string mot, int debut, int fin)
         {
-            int milieu = (debut + fin) / 2;
-            int comparaison = mot[milieu].CompareTo(mot);
-            if (comparaison == 0)
+            if (debut <= fin)
             {
-                return true; // Mot trouvÃ©
+                int milieu = (debut + fin) / 2;
+                int comparaison = mots[milieu].CompareTo(mot);
+                if (comparaison == 0)
+                {
+                    return true; // Mot trouvé
+                }
+                else if (comparaison < 0)
+                {
+                    return RechRec(mot, milieu + 1, fin);
+                }
+                else
+                {
+                    return RechRec(mot, debut, milieu - 1);
+                }
             }
-            else if (comparaison < 0)
-            {
-                return RechRec(mot, milieu + 1, fin);
-            }
-            else
-            {
-                return RechRec(mot, debut, milieu - 1);
-            }
+            return false;
         }
 
-        public void Tri_Fusion(List<string> liste)
+        public void Tri_Fusion()
         {
-            if (liste <= 1)
-                return;
-            else
+            for (char c = 'A'; c <= 'Z'; c++)
             {
-                int millieu = this.Dico.Count / 2;
-                List<string> listegauche = new List<string>();
-                List<string> listedroite = new List<string>();
-                for (int i = 0; i < millieu; i++)
+                if (this.Dico[c].Count <= 1)
+                    return;
+                else
                 {
-                    listegauche.Add(this.Dico[i]);
+                    int millieu = this.Dico[c].Count / 2;
+                    List<string> listegauche = new List<string>();
+                    List<string> listedroite = new List<string>();
+                    for (int i = 0; i < millieu; i++)
+                    {
+                        listegauche.Add(this.Dico[c][i]);
+                    }
+                    for (int i = millieu; i < this.Dico[c].Count; i++)
+                    {
+                        listedroite.Add(this.Dico[c]);
+                    }
+                    Tri_Fusion(listegauche);
+                    Tri_Fusion(listedroite);
+                    Tri_Fusion2(listegauche, listedroite, liste);
                 }
-                for (int i = millieu; i < this.Dico.Count; i++)
-                {
-                    listedroite.Add(this.Dico[i]);
-                }
-
-                Tri_Fusion(listegauche);
-                Tri_Fusion(listedroite);
-                Tri_Fusion2(listegauche, listedroite, this.Dico);
             }
-        }
 
-        public void Tri_Fusion2(List<string> listegauche, List<string> listedroite, List<string> listeFinal)
+        public void Tri_Fusion2(List<string> listegauche, List<string> listedroite, List<string> listeFinale)
         {
             int indigauche = 0;
             int indidroite = 0;
@@ -108,12 +113,12 @@ namespace motsglisses
             {
                 if (listegauche[indigauche].CompareTo(listedroite[indidroite]) <= 0)
                 {
-                    listeFinal[indifusion] = listegauche[indigauche];
+                    listeFinale[indifusion] = listegauche[indigauche];
                     indigauche++;
                 }
                 else
                 {
-                    listeFinal[indifusion] = listedroite[indidroite];
+                    listeFinale[indifusion] = listedroite[indidroite];
                     indidroite++;
                 }
                 indifusion++;
@@ -121,14 +126,14 @@ namespace motsglisses
 
             while (indigauche < listegauche.Count)
             {
-                listeFinal[indifusion] = listegauche[indigauche];
+                listeFinale[indifusion] = listegauche[indigauche];
                 indigauche++;
                 indifusion++;
             }
 
             while (indidroite < listedroite.Count)
             {
-                listeFinal[indifusion] = listedroite[indidroite];
+                listeFinale[indifusion] = listedroite[indidroite];
                 indidroite++;
                 indifusion++;
             }
