@@ -49,32 +49,38 @@ namespace motsglisses
             if (this.Dico.ContainsKey(premiereLettre))
             {
                 List<string> mots = this.Dico[premiereLettre];
-                int debut = 0;
-                int fin = mots.Count - 1;
-                return RechRec(mots, mot, debut, fin);
+                return RechRec(mots, mot);
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
-        public bool RechRec(List<string> mots, string mot, int debut, int fin)
+        public bool RechRec(List<string> mots, string mot)
         {
-            if (debut <= fin)
+            int debut = 0;
+            int fin = mots.Count - 1;
+
+            while (debut <= fin)
             {
                 int milieu = (debut + fin) / 2;
                 int comparaison = mots[milieu].CompareTo(mot);
+
                 if (comparaison == 0)
                 {
                     return true; // Mot trouvé
                 }
                 else if (comparaison < 0)
                 {
-                    return RechRec(mots, mot, milieu + 1, fin);
+                    debut = milieu + 1;
                 }
                 else
                 {
-                    return RechRec(mots, mot, debut, milieu - 1);
+                    fin = milieu - 1;
                 }
             }
+
             return false;
         }
 

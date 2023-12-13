@@ -14,7 +14,9 @@
             Console.WriteLine($"{MotTeste} déja utilisé? {Joueur1.Contient(MotTeste)}");
 
             Dictionnaire Dico = new Dictionnaire("C:/Users/theor/source/repos/TheoLeCodeurPro/MOTSGLISSES/Mots_Français.txt");
-            Console.WriteLine(Dico.toString());
+            Console.WriteLine(Dico.ToString());
+            Dico.Tri_Fusion();
+            Console.WriteLine(Dico.RechercherMot("AFFECTIONNEE"));
         }
     }
 }
