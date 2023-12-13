@@ -74,34 +74,39 @@ namespace motsglisses
             }
         }
 
-        public void Tri_Fusion()
+        public void Tri_Fusion(List<string> liste)
         {
-            if (this.Dico.Count <= 1)
+            if (liste <= 1)
                 return;
             else
             {
                 int millieu = this.Dico.Count / 2;
                 List<string> listegauche = new List<string>();
                 List<string> listedroite = new List<string>();
-                for (int i = 0; i+millieu <= this.Dico.Count - 1; i++) 
+                for (int i = 0; i < millieu; i++)
                 {
                     listegauche.Add(this.Dico[i]);
-                    listedroite.Add(this.Dico[i+millieu]);
                 }
+                for (int i = millieu; i < this.Dico.Count; i++)
+                {
+                    listedroite.Add(this.Dico[i]);
+                }
+
                 Tri_Fusion(listegauche);
                 Tri_Fusion(listedroite);
-                Tri_Fusion(listegauche, listedroite, this.Dico);
+                Tri_Fusion2(listegauche, listedroite, this.Dico);
             }
         }
-        public void Tri_Fusion(List<string> listegauche, List<string> listedroite, List<string> listeFinal)
+
+        public void Tri_Fusion2(List<string> listegauche, List<string> listedroite, List<string> listeFinal)
         {
             int indigauche = 0;
-            int indidroite = 0; 
+            int indidroite = 0;
             int indifusion = 0;
 
             while (indigauche < listegauche.Count && indidroite < listedroite.Count)
             {
-                if (Comparer<string>.Default.Compare(listegauche[indigauche].Key, listedroite[indidroite].Key) <= 0)
+                if (listegauche[indigauche].CompareTo(listedroite[indidroite]) <= 0)
                 {
                     listeFinal[indifusion] = listegauche[indigauche];
                     indigauche++;
@@ -128,8 +133,5 @@ namespace motsglisses
                 indifusion++;
             }
         }
-    }
-
-
     }
 }
