@@ -8,10 +8,10 @@ namespace motsglisses
 {
     internal class Dictionnaire
     {
-        private Dictionary<char, List<string>> motsParLettre;
+        private Dictionary<char, List<string>> Dico;
         public Dictionnaire(string cheminFichier)
         {
-            this.motsParLettre = new Dictionary<char, List<string>>();
+            this.Dico = new Dictionary<char, List<string>>();
             ChargerDictionnaire(cheminFichier);
         }
         private void ChargerDictionnaire(string cheminFichier)
@@ -22,11 +22,11 @@ namespace motsglisses
                 while ((ligne = lecteur.ReadLine()) != null)
                 {
                     char premiereLettre = ligne[0];
-                    if (!this.motsParLettre.ContainsKey(premiereLettre))
+                    if (!this.Dico.ContainsKey(premiereLettre))
                     {
-                        this.motsParLettre[premiereLettre] = new List<string>();
+                        this.Dico[premiereLettre] = new List<string>();
                     }
-                    this.motsParLettre[premiereLettre].Add(ligne);
+                    this.Dico[premiereLettre].Add(ligne);
                 }
             }
         }
@@ -36,8 +36,8 @@ namespace motsglisses
             for (char c = 'A'; c <= 'Z'; c++)
             {
                 //Console.WriteLine(c);
-                //Console.WriteLine(c + " : " + this.motsParLettre[c]);
-                int nBDeMots = this.motsParLettre[c][0].Count(t => t == ' ');
+                //Console.WriteLine(c + " : " + this.Dico[c]);
+                int nBDeMots = this.Dico[c][0].Count(t => t == ' ');
                 msg += c + ":" + nBDeMots.ToString() + ",";
             }
 
@@ -47,9 +47,9 @@ namespace motsglisses
         public bool RechercherMot(string mot)
         {
             char premiereLettre = mot[0];
-            if (this.motsParLettre.ContainsKey(premiereLettre))
+            if (this.Dico.ContainsKey(premiereLettre))
             {
-                List<string> mots = this.motsParLettre[premiereLettre];
+                List<string> mots = this.Dico[premiereLettre];
                 int debut = 0;
                 int fin = mots.Count - 1;
                 return RechRec(mot, debut, fin);
@@ -76,27 +76,59 @@ namespace motsglisses
 
         public void Tri_Fusion()
         {
-            if (this.motsParLettre.Count <= 1)
+            if (this.Dico.Count <= 1)
                 return;
             else
             {
-                int millieu = this.motsParLettre.Count / 2;
+                int millieu = this.Dico.Count / 2;
                 List<string> listegauche = new List<string>();
                 List<string> listedroite = new List<string>();
-                for (int i = 0; i+millieu <= this.motsParLettre.Count; i++) 
+                for (int i = 0; i+millieu <= this.Dico.Count - 1; i++) 
                 {
-                    listegauche.Add(this.motsParLettre[i]);
-                    listedroite.Add(this.motsParLettre[i+millieu]);
+                    listegauche.Add(this.Dico[i]);
+                    listedroite.Add(this.Dico[i+millieu]);
                 }
                 Tri_Fusion(listegauche);
                 Tri_Fusion(listedroite);
-                Tri_Fusion(listegauche, listedroite, this.motsParLettre)
+                Tri_Fusion(listegauche, listedroite, this.Dico);
             }
         }
         public void Tri_Fusion(List<string> listegauche, List<string> listedroite, List<string> listeFinal)
         {
+            int indigauche = 0;
+            int indidroite = 0; 
+            int indifusion = 0;
 
+            while (indigauche < listegauche.Count && indidroite < listedroite.Count)
+            {
+                if (Comparer<string>.Default.Compare(listegauche[indigauche].Key, listedroite[indidroite].Key) <= 0)
+                {
+                    listeFinal[indifusion] = listegauche[indigauche];
+                    indigauche++;
+                }
+                else
+                {
+                    listeFinal[indifusion] = listedroite[indidroite];
+                    indidroite++;
+                }
+                indifusion++;
+            }
+
+            while (indigauche < listegauche.Count)
+            {
+                listeFinal[indifusion] = listegauche[indigauche];
+                indigauche++;
+                indifusion++;
+            }
+
+            while (indidroite < listedroite.Count)
+            {
+                listeFinal[indifusion] = listedroite[indidroite];
+                indidroite++;
+                indifusion++;
+            }
         }
+    }
 
 
     }
