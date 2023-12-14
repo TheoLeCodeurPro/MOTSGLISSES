@@ -216,7 +216,7 @@ namespace motsglisses
         {
             bool foundG, foundD, foundH, foundB;
             
-            if (this.plateau[col-1,lig] == mot[0])
+            if (this.plateau[col,lig] == mot[0])
             {
                 if (mot.Length > 1)
                 {

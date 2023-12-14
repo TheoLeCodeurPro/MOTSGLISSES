@@ -44,8 +44,8 @@
                 // Saisie de la chaîne depuis la console
                 userInput = Console.ReadLine();
                 resRecherche = PlateauJeu.Recherche_Mot(userInput);
-                if (resRecherche) { Console.WriteLine("Mot trouvé") }
-                else { Console.WriteLine("Mot introuvable")}
+                if (resRecherche) { Console.WriteLine("Mot trouvé"); }
+                else { Console.WriteLine("Mot introuvable"); }
             }
 
         }
