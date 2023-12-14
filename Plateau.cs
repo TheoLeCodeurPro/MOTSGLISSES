@@ -17,6 +17,7 @@ namespace motsglisses
         private Dictionary<char, LetterInfo> lettre;
         private List<char> listCar;
         public Dictionnaire dico;
+        private List<int[]> CheminMot;
 
         public Plateau(int longueur, int hauteur)
         {
@@ -69,6 +70,7 @@ namespace motsglisses
                         plateau[i, j] = listCar[i*longueur + j];
                     }
                 }
+
             }
             catch (Exception ex)
             {
@@ -190,6 +192,7 @@ namespace motsglisses
         public bool Recherche_Mot(string mot)
         {
             bool found;
+
             if (mot.Length > 0)
             {
                 if (dico.RechDichoRecursif(mot))
@@ -208,7 +211,7 @@ namespace motsglisses
                         }
                         else 
                         {
-                            Console.WriteLine("Pas OK: "+ i+","+0+","+plateau[i, 0]+" != "+mot[0]);
+                            // Console.WriteLine("Pas OK: "+ i+","+0+","+plateau[i, 0]+" != "+mot[0]);
                         }
 
                     return found;
