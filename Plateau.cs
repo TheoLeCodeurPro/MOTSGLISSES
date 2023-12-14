@@ -184,6 +184,16 @@ namespace motsglisses
                 Poids = poids;
             }
         }
+
+        public object Recherche_Mot(string mot)
+        {
+
+        }
+
+        public void Maj_Plateau(object objet)
+        {
+
+        }
     }
 }
 
