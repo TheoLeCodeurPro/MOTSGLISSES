@@ -104,9 +104,9 @@ namespace motsglisses
         public string toString()
         {
             string desplateau = "";
-            for (int i = 0; i < this.longueur; i++)
+            for (int j = (this.hauteur-1); j >=0; j--)
             {
-                for (int j = 0; j < this.hauteur; j++)
+                for (int i = 0; i < this.longueur; i++)
                 {
                     desplateau += "|" + this.plateau[i, j];
                 }
@@ -123,9 +123,9 @@ namespace motsglisses
             {
                 writer.Write(longueur+","+hauteur);
                 writer.WriteLine();
-                for (int i = 0; i < longueur; i++)
+                for (int j = (this.hauteur-1); j>=0 ; j--)
                 {
-                    for (int j = 0; j < hauteur; j++)
+                    for (int i = 0; i < this.longueur; i++)
                     {
                         writer.Write(plateau[i, j]);
                     }
@@ -152,12 +152,12 @@ namespace motsglisses
                 char[,] nouveauPlateau = new char[longueurLu, hauteurLu];
 
                 // Lire le reste du fichier et remplir le plateau
-                for (int i = 0; i < longueurLu; i++)
+                for (int j = (hauteurLu-1); j >=0 ; j--)
                 {
                     string ligne = reader.ReadLine();
-                    for (int j = 0; j < hauteurLu; j++)
+                    for (int i = 0; i < longueurLu; i++)
                     {
-                        nouveauPlateau[i, j] = ligne[j];
+                        nouveauPlateau[i, j] = ligne[i];
                     }
                 }
 
@@ -196,16 +196,26 @@ namespace motsglisses
                 {
                     found = false;
                     for (int i = 0; i < longueur; i++)
-                        if (this.plateau[i, hauteur - 1] == mot[0])
+                        if (this.plateau[i, 0] == mot[0])
                         {
-                            bool foundG = RechercheMotRecursif(i - 1, hauteur - 1, mot.Substring(1));
-                            bool foundD = RechercheMotRecursif(i + 1, hauteur - 1, mot.Substring(1));
-                            bool foundH = RechercheMotRecursif(i, hauteur - 2, mot.Substring(1));
+                            Console.WriteLine("OK: ", i, 0, plateau[i, 0], " == ", mot[0]);
+                            bool foundG = RechercheMotRecursif(i - 1, 0, mot.Substring(1));
+                            bool foundD = RechercheMotRecursif(i + 1, 0, mot.Substring(1));
+                            bool foundH = RechercheMotRecursif(i, 1, mot.Substring(1));
                             found = found || foundG || foundD || foundH;
                         }
+                        else 
+                        {
+                            Console.WriteLine("Pas OK: "+ i+","+0+","+plateau[i, 0]+" != "+mot[0]);
+                        }
+
                     return found;
                 }
-                else return false;
+                else
+                {
+                    return false;
+                    Console.WriteLine("Mot n'existe pas");
+                }
             }
             else return false;
 
@@ -217,8 +227,9 @@ namespace motsglisses
             bool foundG, foundD, foundH, foundB;
             if ((col > 0) && (lig > 0) && (col < longueur) && (lig < hauteur)) 
             {
-                if (this.plateau[col, lig] == mot[0])
+                if (plateau[col, lig] == mot[0])
                 {
+                    Console.WriteLine("OK: ", col, lig, plateau[col, lig], " == ", mot[0]);
                     if (mot.Length > 1)
                     {
                         foundG = false;
@@ -230,9 +241,9 @@ namespace motsglisses
                         if (col < (longueur - 1))
                             foundD = RechercheMotRecursif(col + 1, lig, mot.Substring(1));
                         if (lig < (hauteur - 1))
-                            foundB = RechercheMotRecursif(col, lig + 1, mot.Substring(1));
+                            foundB = RechercheMotRecursif(col, lig - 1, mot.Substring(1));
                         if (lig > 0)
-                            foundH = RechercheMotRecursif(col, lig - 1, mot.Substring(1));
+                            foundH = RechercheMotRecursif(col, lig + 1, mot.Substring(1));
                         return (foundG || foundD || foundH || foundB);
                     }
                     else return true;

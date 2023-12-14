@@ -27,9 +27,9 @@
             Plateau PlateauJeu = new Plateau(8, 8);
             PlateauJeu.dico = Dico;
             Console.WriteLine(PlateauJeu.toString());
-            PlateauJeu.ToFile("SauvePlateau.txt");
-            PlateauJeu = new Plateau(6, 10);
-            Console.WriteLine(PlateauJeu.toString());
+            // PlateauJeu.ToFile("SauvePlateau.txt");
+            // PlateauJeu = new Plateau(6, 10);
+            // Console.WriteLine(PlateauJeu.toString());
             PlateauJeu.ToRead("SauvePlateau.txt");
             PlateauJeu.dico = Dico;
             Console.WriteLine(PlateauJeu.toString());
