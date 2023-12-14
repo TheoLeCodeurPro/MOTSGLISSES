@@ -6,20 +6,34 @@ using System.Threading.Tasks;
 
 namespace motsglisses
 {
-    internal class Plateau
-    {
-        string[,] plateau;
+public class Plateau
+{
+        char[,] plateau;
+        int longueur;
+        int hauteur;
 
-        public Plateau(string[,] plateau)
+        public Plateau(int longueur, int hauteur)
         {
-            this.plateau = plateau;
+            this.longueur = longueur;
+            this.hauteur = hauteur;
+            this.plateau = new char[longueur, hauteur];
+
+            char lettre = 'A';
+            for (int i = 0; i < longueur; i++)
+            {
+                for (int j = 0; j < hauteur; j++)
+                {
+                    plateau[i, j] = lettre;
+                    lettre++;
+                }
+            }
         }
         public string toString()
         {
             string desplateau = "";
-            for (int i = 0; i < this.plateau.GetLength(0); i++)
+            for (int i = 0; i < this.longueur; i++)
             {
-                for (int j = 0; j < this.plateau.GetLength(1); j++) 
+                for (int j = 0; j < this.hauteur; j++) 
                 {
                     desplateau += "|"+this.plateau[i, j];
                 }

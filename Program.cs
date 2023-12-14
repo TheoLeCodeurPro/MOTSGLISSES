@@ -22,6 +22,8 @@
             Console.WriteLine(Dico.toString());
             //        Console.WriteLine(Dico.toString());;
             Console.WriteLine(Dico.RechDichoRecursif("XYSTE"));
+            Plateau PlateauJeu = new Plateau(8, 8);
+            Console.WriteLine(PlateauJeu.toString());
             //Console.WriteLine("Le programme est en pause. Appuyez sur Entrée pour continuer...");
             //Console.ReadLine();
 
