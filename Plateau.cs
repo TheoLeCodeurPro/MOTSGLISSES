@@ -23,19 +23,13 @@ namespace motsglisses
             this.lettre = new Dictionary<char, LetterInfo>();
 
             // Créer une instance de la classe Random
-            Random random = new Random();
 
-            for (int i = 0; i < longueur; i++)
-            {
-                for (int j = 0; j < hauteur; j++)
-                {
-                    plateau[i, j] = (char)('A' + random.Next(26)); ;
-                }
-            }
             try
             {
                 string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 repertoireCourant = repertoireCourant + "/../../../Lettre.txt";
+                List<char> listCar = new List<char>();
+
                 using (StreamReader reader = new StreamReader(repertoireCourant))
                 {
                     string line;
@@ -50,8 +44,24 @@ namespace motsglisses
                             int poids = int.Parse(parts[2]);
 
                             this.lettre[l] = new LetterInfo(occMax, poids);
-                            Console.WriteLine(l + "," + lettre[l].OccMax + "," + lettre[l].Poids);
+                            // Console.WriteLine(l + "," + lettre[l].OccMax + "," + lettre[l].Poids);
+                            for (int k = 0; k < this.lettre[l].OccMax; k++)
+                            {
+                                listCar.Add(l);
+                            }
                         }
+                    }
+                }
+                MelangerListe(listCar);
+                AfficherListe(listCar);
+
+                Random random = new Random();
+
+                for (int i = 0; i < longueur; i++)
+                {
+                    for (int j = 0; j < hauteur; j++)
+                    {
+                        plateau[i, j] = listCar[i*longueur + j];
                     }
                 }
             }
@@ -59,6 +69,30 @@ namespace motsglisses
             {
                 Console.WriteLine($"Une erreur s'est produite lors de la lecture du fichier : {ex.Message}");
             }
+        }
+
+        static void MelangerListe<T>(List<T> liste)
+        {
+            Random rand = new Random();
+            int n = liste.Count;
+
+            for (int i = n - 1; i > 0; i--)
+            {
+                int j = rand.Next(0, i + 1);
+
+                T temp = liste[i];
+                liste[i] = liste[j];
+                liste[j] = temp;
+            }
+        }
+
+        static void AfficherListe<T>(List<T> liste)
+        {
+            foreach (var element in liste)
+            {
+                Console.Write(element + " ");
+            }
+            Console.WriteLine();
         }
 
         public string toString()
