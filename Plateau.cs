@@ -187,7 +187,11 @@ namespace motsglisses
 
         public object Recherche_Mot(string mot)
         {
+            for (int i = 0; i < longueur; i++)
+                if (plateau[i,0] == mot[0])
+                {
 
+                }
         }
 
         public void Maj_Plateau(object objet)
