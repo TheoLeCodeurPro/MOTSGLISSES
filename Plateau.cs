@@ -18,13 +18,15 @@ public class Plateau
             this.hauteur = hauteur;
             this.plateau = new char[longueur, hauteur];
 
+            // Créer une instance de la classe Random
+            Random random = new Random();
+
             char lettre = 'A';
             for (int i = 0; i < longueur; i++)
             {
                 for (int j = 0; j < hauteur; j++)
                 {
-                    plateau[i, j] = lettre;
-                    lettre++;
+                    plateau[i, j] = (char)('A' + random.Next(26)); ;
                 }
             }
         }
