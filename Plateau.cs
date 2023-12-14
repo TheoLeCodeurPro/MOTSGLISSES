@@ -198,11 +198,13 @@ namespace motsglisses
                     for (int i = 0; i < longueur; i++)
                         if (this.plateau[i, 0] == mot[0])
                         {
-                            Console.WriteLine("OK: ", i, 0, plateau[i, 0], " == ", mot[0]);
+                            // Console.WriteLine("OK: "+ i+","+0+","+plateau[i, 0]+" == "+mot[0]);
                             bool foundG = RechercheMotRecursif(i - 1, 0, mot.Substring(1));
                             bool foundD = RechercheMotRecursif(i + 1, 0, mot.Substring(1));
                             bool foundH = RechercheMotRecursif(i, 1, mot.Substring(1));
-                            found = found || foundG || foundD || foundH;
+                            bool foundHG = RechercheMotRecursif(i - 1, 1, mot.Substring(1));
+                            bool foundHD = RechercheMotRecursif(i + 1, 1, mot.Substring(1));
+                            found = found || foundG || foundD || foundH || foundHG || foundHD;
                         }
                         else 
                         {
@@ -224,18 +226,23 @@ namespace motsglisses
 
         public bool RechercheMotRecursif(int col, int lig, string mot)
         {
-            bool foundG, foundD, foundH, foundB;
-            if ((col > 0) && (lig > 0) && (col < longueur) && (lig < hauteur)) 
+            bool foundG, foundD, foundH, foundB, foundHG, foundHD, foundBG, foundBD;
+            if ((col >= 0) && (lig >= 0) && (col < longueur) && (lig < hauteur)) 
             {
+                // Console.WriteLine("?2: " + col + "," + lig + "," + plateau[col, lig] + " ?? " + mot[0]+" longueur"+longueur+" hauteur"+hauteur);
                 if (plateau[col, lig] == mot[0])
                 {
-                    Console.WriteLine("OK: ", col, lig, plateau[col, lig], " == ", mot[0]);
+                    // Console.WriteLine("OK: "+ col+","+ lig+","+plateau[col, lig]+ " == "+ mot[0]);
                     if (mot.Length > 1)
                     {
                         foundG = false;
                         foundD = false;
                         foundH = false;
                         foundB = false;
+                        foundHG = false;
+                        foundHD = false;
+                        foundBG = false;
+                        foundBD = false;
                         if (col > 0)
                             foundG = RechercheMotRecursif(col - 1, lig, mot.Substring(1));
                         if (col < (longueur - 1))
@@ -244,7 +251,15 @@ namespace motsglisses
                             foundB = RechercheMotRecursif(col, lig - 1, mot.Substring(1));
                         if (lig > 0)
                             foundH = RechercheMotRecursif(col, lig + 1, mot.Substring(1));
-                        return (foundG || foundD || foundH || foundB);
+                        if ((col > 0) && (lig < (hauteur - 1)))
+                            foundHG = RechercheMotRecursif(col - 1, lig + 1, mot.Substring(1));
+                        if ((col < (longueur - 1)) && (lig < (hauteur - 1)))
+                            foundHD = RechercheMotRecursif(col + 1, lig + 1, mot.Substring(1));
+                        if ((col > 0) && (lig >0))
+                            foundBG = RechercheMotRecursif(col - 1, lig - 1, mot.Substring(1));
+                        if ((col < (longueur - 1)) && (lig > 0))
+                            foundBD = RechercheMotRecursif(col + 1, lig - 1, mot.Substring(1));
+                        return (foundG || foundD || foundH || foundB || foundHG || foundHD || foundBG || foundBD);
                     }
                     else return true;
 
