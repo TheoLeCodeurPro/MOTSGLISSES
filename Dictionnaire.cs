@@ -11,6 +11,8 @@ public class Dictionnaire
     {
         this.dictionnaire = new Dictionary<char, List<string>>();
         ChargerDictionnaire(cheminFichier);
+        this.Tri_Fusion();
+
     }
 
     private void ChargerDictionnaire(string cheminFichier)
@@ -51,6 +53,16 @@ public class Dictionnaire
         for (char c = 'A'; c <= 'Z'; c++)
         {
             msg += c + ":" + this.dictionnaire[c].Count + ",";
+            /*
+            if ((c == 'A') || (c == 'B'))
+            {
+                foreach (var entry in this.dictionnaire[c])
+                {
+                    Console.WriteLine(c+" - "+entry);
+                }
+            }
+            */
+            
         }
 
         return msg.TrimEnd(','); // Supprime la virgule à la fin de la chaîne
@@ -91,70 +103,62 @@ public class Dictionnaire
         return false;
     }
 
-
     public void Tri_Fusion()
     {
-        Tri_Fusion(this.dictionnaire['A']);
-        Tri_Fusion(this.dictionnaire['B']);
-        // foreach (var entry in this.dictionnaire)
-        // {
-        //     Tri_Fusion(entry.Value);
-        // }
+        for (char c = 'A'; c <= 'Z'; c++)
+        {
+            this.dictionnaire[c] = Tri(this.dictionnaire[c]);
+        }
     }
 
-    private void Tri_Fusion(List<string> liste)
+    private List<string> Tri(List<string> listeMots)
     {
-        foreach (string element in liste)
-        {
-            Console.WriteLine("Passe 2 : "+element);
-        }
-        if (liste.Count <= 1)
-            return;
+        if (listeMots.Count <= 1)
+            return listeMots;
         else
         {
-            int millieu = liste.Count / 2;
-            List<string> listegauche = new List<string>(liste.GetRange(0, millieu));
-            List<string> listedroite = new List<string>(liste.GetRange(millieu, liste.Count - millieu));
+            int millieu = listeMots.Count / 2;
+            List<string> listeGauche = new List<string>(listeMots.GetRange(0, millieu));
+            List<string> listeDroite = new List<string>(listeMots.GetRange(millieu, listeMots.Count - millieu));
 
-            Tri_Fusion(listegauche);
-            Tri_Fusion(listedroite);
-            Tri_Fusion2(listegauche, listedroite, liste);
+            List<string> listeGaucheTrie = Tri(listeGauche);
+            List<string> listeDroiteTrie = Tri(listeDroite);
+            return Fusion(listeGaucheTrie, listeDroiteTrie);
         }
     }
 
-    private void Tri_Fusion2(List<string> listegauche, List<string> listedroite, List<string> listeFinale)
+    private List<string> Fusion(List<string> listeGauche, List<string> listeDroite )
     {
-        int indigauche = 0;
-        int indidroite = 0;
-        int indifusion = 0;
+        List<string> listeFinale = new List<string>(); 
+        int indiGauche = 0;
+        int indiDroite = 0;
 
-        while (indigauche < listegauche.Count && indidroite < listedroite.Count)
+        while ((indiGauche < listeGauche.Count) && (indiDroite < listeDroite.Count))
         {
-            if (listegauche[indigauche].CompareTo(listedroite[indidroite]) <= 0)
+            if (listeGauche[indiGauche].CompareTo(listeDroite[indiDroite]) <= 0)
             {
-                listeFinale[indifusion] = listegauche[indigauche];
-                indigauche++;
+                listeFinale.Add(listeGauche[indiGauche]);
+                indiGauche++;
             }
             else
             {
-                listeFinale[indifusion] = listedroite[indidroite];
-                indidroite++;
+                listeFinale.Add(listeDroite[indiDroite]);
+                indiDroite++;
             }
-            indifusion++;
         }
 
-        while (indigauche < listegauche.Count)
+        while (indiGauche < listeGauche.Count)
         {
-            listeFinale[indifusion] = listegauche[indigauche];
-            indigauche++;
-            indifusion++;
+            listeFinale.Add(listeGauche[indiGauche]);
+            indiGauche++;
         }
 
-        while (indidroite < listedroite.Count)
+        while (indiDroite < listeDroite.Count)
         {
-            listeFinale[indifusion] = listedroite[indidroite];
-            indidroite++;
-            indifusion++;
+            listeFinale.Add(listeDroite[indiDroite]);
+            indiDroite++;
         }
+
+        return listeFinale;
     }
 }

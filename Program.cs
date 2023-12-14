@@ -15,11 +15,13 @@
 
             //Dictionnaire Dico = new Dictionnaire("C:/Users/theor/source/repos/TheoLeCodeurPro/MOTSGLISSES/Mots_Français.txt");
             Dictionnaire Dico = new Dictionnaire("Mots_Français.txt");
-            Console.WriteLine(Dico.toString());
-            // Dico.Tri_Fusion();
-            //Console.WriteLine(Dico.['A'][0]);
-            //Console.WriteLine(Dico.RechDichoRecursif("AFFECTIONNEE"));
+            // Console.WriteLine(Dico.toString());
             
+            Dico.Tri_Fusion();
+            Console.WriteLine("Après");
+            Console.WriteLine(Dico.toString());
+            //        Console.WriteLine(Dico.toString());;
+            Console.WriteLine(Dico.RechDichoRecursif("XYSTE"));
             //Console.WriteLine("Le programme est en pause. Appuyez sur Entrée pour continuer...");
             //Console.ReadLine();
 
