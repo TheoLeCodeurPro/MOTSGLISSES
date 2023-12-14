@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "qFQM/8rTM4XTjtqcNUv6xm6m2k9gBqWjE94G8OoK52n+MdDtVv06Or4YBlBZWBPhHhTG8rjhT+ehRN2DFb1S0A==",
+  "dgSpecHash": "LaD2EpXFMdnfTpbgKbEaTS9T/TJxoXN0Fh0gaBZRmNaklNkBhfHXePdMtlOMMG4eov3D4DvS3PPz9zwNXHD+FA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\theor\\source\\repos\\TheoLeCodeurPro\\MOTSGLISSES\\motsglisses.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\olivi\\Documents\\Theo\\Etudes\\Lecons\\2023-2024 - ESILV - Année 2\\Informatique\\MOTSGLISSES\\motsglisses.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\olivi\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.25\\microsoft.windowsdesktop.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\olivi\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.25\\microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\olivi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.25\\microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\olivi\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.25\\microsoft.netcore.app.host.win-x64.6.0.25.nupkg.sha512"
+  ],
   "logs": []
 }

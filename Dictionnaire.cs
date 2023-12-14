@@ -15,7 +15,17 @@ public class Dictionnaire
 
     private void ChargerDictionnaire(string cheminFichier)
     {
-        using (StreamReader lecteur = new StreamReader(cheminFichier))
+        string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        if (repertoireCourant.Contains("Debug"))
+        {
+            repertoireCourant = repertoireCourant+ "/../../../";
+        }
+        else
+        {
+            repertoireCourant = repertoireCourant + "/../../../";
+        }
+        Console.WriteLine(repertoireCourant);
+        using (StreamReader lecteur = new StreamReader(repertoireCourant+cheminFichier))
         {
             string ligne;
             while ((ligne = lecteur.ReadLine()) != null)
@@ -25,7 +35,11 @@ public class Dictionnaire
                 {
                     this.dictionnaire[premiereLettre] = new List<string>();
                 }
-                this.dictionnaire[premiereLettre].Add(ligne);
+                // Diviser la ligne en mots en utilisant l'espace comme délimiteur
+                string[] mots = ligne.Split(' ');
+
+                // Ajouter les mots à la liste associée à la première lettre
+                this.dictionnaire[premiereLettre].AddRange(mots);
             }
         }
     }
@@ -33,16 +47,14 @@ public class Dictionnaire
 
     public string toString()
     {
-        string msg = "FR : ";
+        string msg = "Langue = fr : ";
         for (char c = 'A'; c <= 'Z'; c++)
         {
-            int nBDeMots = this.dictionnaire[c][0].Count(t => t == ' ');
-            msg += c + ":" + nBDeMots.ToString() + ",";
+            msg += c + ":" + this.dictionnaire[c].Count + ",";
         }
 
-        return msg;
+        return msg.TrimEnd(','); // Supprime la virgule à la fin de la chaîne
     }
-
 
     public bool RechDichoRecursif(string mot)
     {
@@ -82,14 +94,20 @@ public class Dictionnaire
 
     public void Tri_Fusion()
     {
-        foreach (var entry in this.dictionnaire)
-        {
-            Tri_Fusion(entry.Value);
-        }
+        Tri_Fusion(this.dictionnaire['A']);
+        Tri_Fusion(this.dictionnaire['B']);
+        // foreach (var entry in this.dictionnaire)
+        // {
+        //     Tri_Fusion(entry.Value);
+        // }
     }
 
     private void Tri_Fusion(List<string> liste)
     {
+        foreach (string element in liste)
+        {
+            Console.WriteLine("Passe 2 : "+element);
+        }
         if (liste.Count <= 1)
             return;
         else
