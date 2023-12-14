@@ -25,6 +25,10 @@
             Plateau PlateauJeu = new Plateau(8, 8);
             Console.WriteLine(PlateauJeu.toString());
             PlateauJeu.ToFile("SauvePlateau.txt");
+            PlateauJeu = new Plateau(6, 10);
+            Console.WriteLine(PlateauJeu.toString());
+            PlateauJeu.ToRead("SauvePlateau.txt");
+            Console.WriteLine(PlateauJeu.toString());
             //Console.WriteLine("Le programme est en pause. Appuyez sur Entrée pour continuer...");
             //Console.ReadLine();
 

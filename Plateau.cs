@@ -130,7 +130,44 @@ namespace motsglisses
                     writer.WriteLine();
                 }
             }
-            Console.WriteLine("Plateau sauvé dans le fichier " + nomfile);
+            Console.WriteLine("Plateau sauvé dans le fichier " + nomfile + "\n");
+        }
+
+        public void ToRead(string nomfile)
+        {
+            string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            repertoireCourant = repertoireCourant + "/../../../" + nomfile;
+
+            using (StreamReader reader = new StreamReader(repertoireCourant))
+            {
+                // Lire les dimensions du plateau depuis la première ligne
+                string dimensions = reader.ReadLine();
+                string[] dimensionsArray = dimensions.Split(',');
+                int longueurLu = int.Parse(dimensionsArray[0]);
+                int hauteurLu = int.Parse(dimensionsArray[1]);
+
+                // Initialiser un nouveau plateau avec les dimensions lues
+                char[,] nouveauPlateau = new char[longueurLu, hauteurLu];
+
+                // Lire le reste du fichier et remplir le plateau
+                for (int i = 0; i < longueurLu; i++)
+                {
+                    string ligne = reader.ReadLine();
+                    for (int j = 0; j < hauteurLu; j++)
+                    {
+                        nouveauPlateau[i, j] = ligne[j];
+                    }
+                }
+
+                // Mettre à jour le plateau actuel avec les nouvelles valeurs lues
+                this.plateau = nouveauPlateau;
+                this.longueur = longueurLu;
+                this.hauteur = hauteurLu;
+                longueur = this.longueur;
+                hauteur = this.hauteur;
+
+                Console.WriteLine("Plateau chargé depuis le fichier " + nomfile+"\n");
+            }
         }
 
 
