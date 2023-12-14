@@ -2,6 +2,8 @@
 {
     internal class Program
     {
+        public Dictionnaire Dico;
+        
         static void Main(string[] args)
         {
             Joueur Joueur1 = new Joueur("Théo");
@@ -23,14 +25,28 @@
             //        Console.WriteLine(Dico.toString());;
             Console.WriteLine(Dico.RechDichoRecursif("XYSTE"));
             Plateau PlateauJeu = new Plateau(8, 8);
+            PlateauJeu.dico = Dico;
             Console.WriteLine(PlateauJeu.toString());
             PlateauJeu.ToFile("SauvePlateau.txt");
             PlateauJeu = new Plateau(6, 10);
             Console.WriteLine(PlateauJeu.toString());
             PlateauJeu.ToRead("SauvePlateau.txt");
+            PlateauJeu.dico = Dico;
             Console.WriteLine(PlateauJeu.toString());
             //Console.WriteLine("Le programme est en pause. Appuyez sur Entrée pour continuer...");
             //Console.ReadLine();
+            string userInput;
+            bool resRecherche;
+            userInput = "A";
+            while (userInput != "")
+            {
+                Console.WriteLine("Veuillez saisir une chaîne de caractères :");
+                // Saisie de la chaîne depuis la console
+                userInput = Console.ReadLine();
+                resRecherche = PlateauJeu.Recherche_Mot(userInput);
+                if (resRecherche) { Console.WriteLine("Mot trouvé") }
+                else { Console.WriteLine("Mot introuvable")}
+            }
 
         }
     }
