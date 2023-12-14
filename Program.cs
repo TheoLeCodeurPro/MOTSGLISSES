@@ -24,6 +24,7 @@
             Console.WriteLine(Dico.RechDichoRecursif("XYSTE"));
             Plateau PlateauJeu = new Plateau(8, 8);
             Console.WriteLine(PlateauJeu.toString());
+            PlateauJeu.ToFile("SauvePlateau.txt");
             //Console.WriteLine("Le programme est en pause. Appuyez sur Entrée pour continuer...");
             //Console.ReadLine();
 

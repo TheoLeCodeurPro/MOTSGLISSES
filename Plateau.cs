@@ -14,6 +14,7 @@ namespace motsglisses
         int longueur;
         int hauteur;
         private Dictionary<char, LetterInfo> lettre;
+        private List<char> listCar;
 
         public Plateau(int longueur, int hauteur)
         {
@@ -21,14 +22,18 @@ namespace motsglisses
             this.hauteur = hauteur;
             this.plateau = new char[longueur, hauteur];
             this.lettre = new Dictionary<char, LetterInfo>();
+            this.listCar = new List<char>();
+
 
             // Créer une instance de la classe Random
-
+            if ((longueur<=0)||(hauteur<=0))
+            {
+                Console.WriteLine("Dimensions du plateau incohérente (longueur et hauteur doivent être > 0)");
+            }
             try
             {
                 string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 repertoireCourant = repertoireCourant + "/../../../Lettre.txt";
-                List<char> listCar = new List<char>();
 
                 using (StreamReader reader = new StreamReader(repertoireCourant))
                 {
@@ -53,9 +58,7 @@ namespace motsglisses
                     }
                 }
                 MelangerListe(listCar);
-                AfficherListe(listCar);
-
-                Random random = new Random();
+                // AfficherListe(listCar);
 
                 for (int i = 0; i < longueur; i++)
                 {
@@ -71,6 +74,7 @@ namespace motsglisses
             }
         }
 
+        // Melange du tableau selon l' algorithme de Fisher-Yates 
         static void MelangerListe<T>(List<T> liste)
         {
             Random rand = new Random();
@@ -110,8 +114,25 @@ namespace motsglisses
         }
         public void ToFile(string nomfile)
         {
+            string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            repertoireCourant = repertoireCourant + "/../../../" + nomfile;
 
+            using (StreamWriter writer = new StreamWriter(repertoireCourant))
+            {
+                writer.Write(longueur+","+hauteur);
+                writer.WriteLine();
+                for (int i = 0; i < longueur; i++)
+                {
+                    for (int j = 0; j < hauteur; j++)
+                    {
+                        writer.Write(plateau[i, j]);
+                    }
+                    writer.WriteLine();
+                }
+            }
+            Console.WriteLine("Plateau sauvé dans le fichier " + nomfile);
         }
+
 
         // Classe pour stocker les informations associées à une lettre
         public class LetterInfo
