@@ -198,7 +198,7 @@ namespace motsglisses
                     for (int i = 0; i < longueur; i++)
                         if (this.plateau[i, hauteur - 1] == mot[0])
                         {
-                            bool foundG = this.RechercheMotRecursif(i - 1, hauteur - 1, mot.Substring(1));
+                            bool foundG = RechercheMotRecursif(i - 1, hauteur - 1, mot.Substring(1));
                             bool foundD = RechercheMotRecursif(i + 1, hauteur - 1, mot.Substring(1));
                             bool foundH = RechercheMotRecursif(i, hauteur - 2, mot.Substring(1));
                             found = found || foundG || foundD || foundH;
@@ -215,29 +215,33 @@ namespace motsglisses
         public bool RechercheMotRecursif(int col, int lig, string mot)
         {
             bool foundG, foundD, foundH, foundB;
-            
-            if (this.plateau[col,lig] == mot[0])
+            if ((col > 0) && (lig > 0) && (col < longueur) && (lig < hauteur)) 
             {
-                if (mot.Length > 1)
+                if (this.plateau[col, lig] == mot[0])
                 {
-                    foundG = false;
-                    foundD = false;
-                    foundH = false;
-                    foundB = false;
-                    if (col > 0)
-                        foundG = RechercheMotRecursif(col - 1, lig, mot.Substring(1));
-                    if (col < (longueur - 1))
-                        foundD = RechercheMotRecursif(col + 1, lig, mot.Substring(1));
-                    if (lig < (hauteur -1))
-                        foundB = RechercheMotRecursif(col, lig + 1, mot.Substring(1));
-                    if (lig > 0)
-                        foundH = RechercheMotRecursif(col, lig - 1, mot.Substring(1));
-                    return (foundG || foundD || foundH || foundB); 
-                }
-                else return true;
+                    if (mot.Length > 1)
+                    {
+                        foundG = false;
+                        foundD = false;
+                        foundH = false;
+                        foundB = false;
+                        if (col > 0)
+                            foundG = RechercheMotRecursif(col - 1, lig, mot.Substring(1));
+                        if (col < (longueur - 1))
+                            foundD = RechercheMotRecursif(col + 1, lig, mot.Substring(1));
+                        if (lig < (hauteur - 1))
+                            foundB = RechercheMotRecursif(col, lig + 1, mot.Substring(1));
+                        if (lig > 0)
+                            foundH = RechercheMotRecursif(col, lig - 1, mot.Substring(1));
+                        return (foundG || foundD || foundH || foundB);
+                    }
+                    else return true;
 
+                }
+                else return false;
             }
             else return false;
+
         }
         
         public void Maj_Plateau(object objet)
