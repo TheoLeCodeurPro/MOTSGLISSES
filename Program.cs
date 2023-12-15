@@ -48,10 +48,10 @@
                 { 
                     Console.WriteLine("Mot trouvé");
                     PlateauJeu.Affiche_Chemin(resRecherche);
+                    PlateauJeu.Maj_Plateau(resRecherche);
+                    Console.WriteLine(PlateauJeu.toString());
                 }
-                else { Console.WriteLine("Mot introuvable"); }
-                PlateauJeu.Maj_Plateau(resRecherche);
-                Console.WriteLine(PlateauJeu.toString());
+
             }
 
         }
