@@ -17,7 +17,6 @@ namespace motsglisses
         private Dictionary<char, LetterInfo> lettre;
         private List<char> listCar;
         public Dictionnaire dico;
-        private List<int[]> CheminMot;
 
         public Plateau(int longueur, int hauteur)
         {
@@ -29,7 +28,7 @@ namespace motsglisses
 
 
             // Créer une instance de la classe Random
-            if ((longueur<=0)||(hauteur<=0))
+            if ((longueur <= 0) || (hauteur <= 0))
             {
                 Console.WriteLine("Dimensions du plateau incohérente (longueur et hauteur doivent être > 0)");
             }
@@ -67,7 +66,7 @@ namespace motsglisses
                 {
                     for (int j = 0; j < hauteur; j++)
                     {
-                        plateau[i, j] = listCar[i*longueur + j];
+                        plateau[i, j] = listCar[i * longueur + j];
                     }
                 }
 
@@ -106,7 +105,7 @@ namespace motsglisses
         public string toString()
         {
             string desplateau = "";
-            for (int j = (this.hauteur-1); j >=0; j--)
+            for (int j = (this.hauteur - 1); j >= 0; j--)
             {
                 for (int i = 0; i < this.longueur; i++)
                 {
@@ -123,9 +122,9 @@ namespace motsglisses
 
             using (StreamWriter writer = new StreamWriter(repertoireCourant))
             {
-                writer.Write(longueur+","+hauteur);
+                writer.Write(longueur + "," + hauteur);
                 writer.WriteLine();
-                for (int j = (this.hauteur-1); j>=0 ; j--)
+                for (int j = (this.hauteur - 1); j >= 0; j--)
                 {
                     for (int i = 0; i < this.longueur; i++)
                     {
@@ -154,7 +153,7 @@ namespace motsglisses
                 char[,] nouveauPlateau = new char[longueurLu, hauteurLu];
 
                 // Lire le reste du fichier et remplir le plateau
-                for (int j = (hauteurLu-1); j >=0 ; j--)
+                for (int j = (hauteurLu - 1); j >= 0; j--)
                 {
                     string ligne = reader.ReadLine();
                     for (int i = 0; i < longueurLu; i++)
@@ -167,10 +166,9 @@ namespace motsglisses
                 this.plateau = nouveauPlateau;
                 this.longueur = longueurLu;
                 this.hauteur = hauteurLu;
-                longueur = this.longueur;
-                hauteur = this.hauteur;
 
-                Console.WriteLine("Plateau chargé depuis le fichier " + nomfile+"\n");
+
+                Console.WriteLine("Plateau chargé depuis le fichier " + nomfile + "\n");
             }
         }
 
@@ -189,47 +187,43 @@ namespace motsglisses
             }
         }
 
-        public bool Recherche_Mot(string mot)
+        public List<int[]> Recherche_Mot(string mot)
         {
-            bool found;
-
             if (mot.Length > 0)
             {
                 if (dico.RechDichoRecursif(mot))
                 {
-                    found = false;
                     for (int i = 0; i < longueur; i++)
+                    {
                         if (this.plateau[i, 0] == mot[0])
                         {
-                            // Console.WriteLine("OK: "+ i+","+0+","+plateau[i, 0]+" == "+mot[0]);
-                            bool foundG = RechercheMotRecursif(i - 1, 0, mot.Substring(1));
-                            bool foundD = RechercheMotRecursif(i + 1, 0, mot.Substring(1));
-                            bool foundH = RechercheMotRecursif(i, 1, mot.Substring(1));
-                            bool foundHG = RechercheMotRecursif(i - 1, 1, mot.Substring(1));
-                            bool foundHD = RechercheMotRecursif(i + 1, 1, mot.Substring(1));
-                            found = found || foundG || foundD || foundH || foundHG || foundHD;
+                            List<int[]> chemin1 = RechercheMotRecursif(i - 1, 0, mot.Substring(1));
+                            if (chemin1.Count > 0) { chemin1.Add(new int[] { i, 0 }); return chemin1;  }
+                            List<int[]> chemin2 = RechercheMotRecursif(i - 1, 1, mot.Substring(1));
+                            if (chemin2.Count > 0) { chemin2.Add(new int[] { i, 0 }); return chemin2; }
+                            List<int[]> chemin3 = RechercheMotRecursif(i, 1, mot.Substring(1));
+                            if (chemin3.Count > 0) { chemin3.Add(new int[] { i, 0 }); return chemin3; }
+                            List<int[]> chemin4 = RechercheMotRecursif(i + 1, 1, mot.Substring(1));
+                            if (chemin4.Count > 0) { chemin4.Add(new int[] { i , 0 }); return chemin4; }
+                            List<int[]> chemin5 = RechercheMotRecursif(i + 1, 0, mot.Substring(1));
+                            if (chemin5.Count > 0) { chemin5.Add(new int[] { i , 0 }); return chemin5; }
                         }
-                        else 
-                        {
-                            // Console.WriteLine("Pas OK: "+ i+","+0+","+plateau[i, 0]+" != "+mot[0]);
-                        }
+                    }
 
-                    return found;
                 }
-                else
-                {
-                    return false;
-                    Console.WriteLine("Mot n'existe pas");
-                }
+                else 
+                    { 
+                        Console.WriteLine("Mot n'existe pas");
+                    }
+                
             }
-            else return false;
-
-
+            return new List<int[]>();
         }
 
-        public bool RechercheMotRecursif(int col, int lig, string mot)
+
+
+        private List<int[]> RechercheMotRecursif(int col, int lig, string mot)
         {
-            bool foundG, foundD, foundH, foundB, foundHG, foundHD, foundBG, foundBD;
             if ((col >= 0) && (lig >= 0) && (col < longueur) && (lig < hauteur)) 
             {
                 // Console.WriteLine("?2: " + col + "," + lig + "," + plateau[col, lig] + " ?? " + mot[0]+" longueur"+longueur+" hauteur"+hauteur);
@@ -238,43 +232,63 @@ namespace motsglisses
                     // Console.WriteLine("OK: "+ col+","+ lig+","+plateau[col, lig]+ " == "+ mot[0]);
                     if (mot.Length > 1)
                     {
-                        foundG = false;
-                        foundD = false;
-                        foundH = false;
-                        foundB = false;
-                        foundHG = false;
-                        foundHD = false;
-                        foundBG = false;
-                        foundBD = false;
-                        if (col > 0)
-                            foundG = RechercheMotRecursif(col - 1, lig, mot.Substring(1));
-                        if (col < (longueur - 1))
-                            foundD = RechercheMotRecursif(col + 1, lig, mot.Substring(1));
-                        if (lig < (hauteur - 1))
-                            foundB = RechercheMotRecursif(col, lig - 1, mot.Substring(1));
-                        if (lig > 0)
-                            foundH = RechercheMotRecursif(col, lig + 1, mot.Substring(1));
-                        if ((col > 0) && (lig < (hauteur - 1)))
-                            foundHG = RechercheMotRecursif(col - 1, lig + 1, mot.Substring(1));
-                        if ((col < (longueur - 1)) && (lig < (hauteur - 1)))
-                            foundHD = RechercheMotRecursif(col + 1, lig + 1, mot.Substring(1));
-                        if ((col > 0) && (lig >0))
-                            foundBG = RechercheMotRecursif(col - 1, lig - 1, mot.Substring(1));
-                        if ((col < (longueur - 1)) && (lig > 0))
-                            foundBD = RechercheMotRecursif(col + 1, lig - 1, mot.Substring(1));
-                        return (foundG || foundD || foundH || foundB || foundHG || foundHD || foundBG || foundBD);
+                        List<int[]> chemin1 = RechercheMotRecursif(col - 1, lig, mot.Substring(1));
+                        if (chemin1.Count > 0) { chemin1.Add(new int[] { col , lig }); return chemin1; }
+                        List<int[]> chemin2 = RechercheMotRecursif(col + 1, lig, mot.Substring(1));
+                        if (chemin2.Count > 0) { chemin2.Add(new int[] { col, lig }); return chemin2; }
+                        List<int[]> chemin3 = RechercheMotRecursif(col, lig - 1, mot.Substring(1));
+                        if (chemin3.Count > 0) { chemin3.Add(new int[] { col, lig }); return chemin3; }
+                        List<int[]> chemin4 = RechercheMotRecursif(col, lig + 1, mot.Substring(1));
+                        if (chemin4.Count > 0) { chemin4.Add(new int[] { col, lig }); return chemin4; }
+                        List<int[]> chemin5 = RechercheMotRecursif(col - 1, lig + 1, mot.Substring(1));
+                        if (chemin5.Count > 0) { chemin5.Add(new int[] { col, lig }); return chemin5; }
+                        List<int[]> chemin6 = RechercheMotRecursif(col + 1, lig + 1, mot.Substring(1));
+                        if (chemin6.Count > 0) { chemin6.Add(new int[] { col, lig }); return chemin6; }
+                        List<int[]> chemin7 = RechercheMotRecursif(col - 1, lig - 1, mot.Substring(1));
+                        if (chemin7.Count > 0) { chemin7.Add(new int[] { col, lig }); return chemin7; }
+                        List<int[]> chemin8 = RechercheMotRecursif(col + 1, lig - 1, mot.Substring(1));
+                        if (chemin8.Count > 0) { chemin8.Add(new int[] { col, lig}); return chemin8; }
                     }
-                    else return true;
-
+                    else
+                    {
+                        List<int[]> chemin0 = new List<int[]> { new int[] { col, lig } };
+                        return chemin0;
+                    }
                 }
-                else return false;
             }
-            else return false;
+            return new List<int[]>();
 
         }
-        
-        public void Maj_Plateau(object objet)
+
+        public void Affiche_Chemin(List<int[]> chemin)
         {
+            string message = "";
+
+            if (chemin.Count > 0)
+            {
+                for (int i = (chemin.Count-1); i>=0; i--)
+                {
+                    message = message + "(" + chemin[i][0] + "," + chemin[i][1] + ") , ";
+                }
+            Console.WriteLine("Chemin trouvé : "+message+"\n");
+            }
+
+        }
+
+            
+
+
+        public void Maj_Plateau(List<int[]> chemin)
+        {
+
+            if (chemin.Count > 0)
+            {
+                for (int i = (chemin.Count - 1); i >= 0; i--)
+                {
+                    message = message + "(" + chemin[i][0] + "," + chemin[i][1] + ") , ";
+                }
+
+            }
 
         }
     }

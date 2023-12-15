@@ -36,7 +36,7 @@
             //Console.WriteLine("Le programme est en pause. Appuyez sur Entrée pour continuer...");
             //Console.ReadLine();
             string userInput;
-            bool resRecherche;
+            List<int[]> resRecherche;
             userInput = "A";
             while (userInput != "")
             {
@@ -44,7 +44,11 @@
                 // Saisie de la chaîne depuis la console
                 userInput = Console.ReadLine();
                 resRecherche = PlateauJeu.Recherche_Mot(userInput);
-                if (resRecherche) { Console.WriteLine("Mot trouvé"); }
+                if (resRecherche.Count > 0) 
+                { 
+                    Console.WriteLine("Mot trouvé");
+                    PlateauJeu.Affiche_Chemin(resRecherche);
+                }
                 else { Console.WriteLine("Mot introuvable"); }
             }
 
