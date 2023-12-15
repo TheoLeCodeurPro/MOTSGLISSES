@@ -50,6 +50,8 @@
                     PlateauJeu.Affiche_Chemin(resRecherche);
                 }
                 else { Console.WriteLine("Mot introuvable"); }
+                PlateauJeu.Maj_Plateau(resRecherche);
+                Console.WriteLine(PlateauJeu.toString());
             }
 
         }

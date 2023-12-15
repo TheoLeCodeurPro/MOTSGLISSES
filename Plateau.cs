@@ -285,9 +285,28 @@ namespace motsglisses
             {
                 for (int i = (chemin.Count - 1); i >= 0; i--)
                 {
-                    message = message + "(" + chemin[i][0] + "," + chemin[i][1] + ") , ";
+                    plateau[chemin[i][0], chemin[i][1]] = ' ';
                 }
-
+                for (int i = 0; i < longueur; i++)
+                {
+                    int j = hauteur -1;
+                    while (j >=0)
+                    {
+                        if (plateau[i, j] == ' ')
+                        {
+                            if (j < (hauteur - 1))
+                            {
+                                for (int k = j; k < (hauteur - 1); k++)
+                                {
+                                    plateau[i, k] = plateau[i, k + 1];
+                                }
+                                plateau[i, hauteur - 1] = ' ';
+                            }
+                        }
+                        j--;
+                    }
+                }
+                Affiche_Chemin(chemin);
             }
 
         }
