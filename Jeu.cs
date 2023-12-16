@@ -27,7 +27,7 @@ namespace motsglisses
         public void AjouterJoueur()
         {
             string nom = "";
-            Console.Write("Nom du 1er joueur  : ");
+            Console.Write("\nNom du 1er joueur  : ");
             //int positionDebutSaisie = Console.CursorLeft;
             while (nom == "")
                 nom = Console.ReadLine();
