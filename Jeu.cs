@@ -52,9 +52,9 @@ namespace motsglisses
             Console.Clear();
             Console.SetCursorPosition(0, 2);
             timer = new Timer(TimerCallback, null, 0, 1000); // 1000 ms = 1 seconde
+            string mot = "";
 
-
-            while (( duree >= 0) && plateau.LettresRestantes())
+            while (( duree >= 0) && plateau.LettresRestantes() && (mot != "STOPJEU"))
             {
 
                 Console.WriteLine($"Tour {tourActuel}");
@@ -69,37 +69,37 @@ namespace motsglisses
                 // Initialiser le temps restant (60 secondes / tour)
                 tempsRestant = 40;
                 // Demander au joueur de saisir un mot
-                Console.Write("\nSaisissez un mot : ");
-                string mot = Console.ReadLine().ToUpper();
+                Console.Write("\nSaisissez un mot (STOPJEU pour arreter le jeu en cours): ");
+                mot = Console.ReadLine().ToUpper();
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
-
-                if (tempsRestant >= 0)
-                {
-                    cheminMot = plateau.Recherche_Mot(mot);
-                    // Vérifier si le mot est valide
-                    if (!joueurCourant.Contient(mot) && (cheminMot.Count>0))
+                if (mot != "STOPJEU")
+                    if (tempsRestant >= 0)
                     {
-                        // Mettre à jour le score du joueur et le plateau
-                        int score = CalculerScore(mot);
-                        joueurCourant.Add_Mot(mot);
-                        joueurCourant.Add_Score(score);
-                        plateau.Maj_Plateau(cheminMot);
-                        Console.WriteLine($"Mot valide ! Score du tour : {score}, Nouveau Score de {joueurCourant.nom} : {joueurCourant.score}\n");
+                        cheminMot = plateau.Recherche_Mot(mot);
+                        // Vérifier si le mot est valide
+                        if (!joueurCourant.Contient(mot) && (cheminMot.Count>0))
+                        {
+                            // Mettre à jour le score du joueur et le plateau
+                            int score = CalculerScore(mot);
+                            joueurCourant.Add_Mot(mot);
+                            joueurCourant.Add_Score(score);
+                            plateau.Maj_Plateau(cheminMot);
+                            Console.WriteLine($"Mot valide ! Score du tour : {score}, Nouveau Score de {joueurCourant.nom} : {joueurCourant.score}\n");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Mot invalide ou déjà utilisé. Au joueur suivant...\n");
+                        }
+
+                        // Passer au joueur suivant
+                        tourActuel++;
                     }
                     else
                     {
-                        Console.WriteLine("Mot invalide ou déjà utilisé. Au joueur suivant...\n");
-                    }
-
-                    // Passer au joueur suivant
-                    tourActuel++;
-                }
-                else
-                {
                     //timer.Dispose();
                     tourActuel++;
-                }
+                    }
             }
 
             // Afficher le résultat final
@@ -152,6 +152,8 @@ namespace motsglisses
             }
             if (joueurs[0].score > joueurs[1].score) Console.WriteLine("Vainqueur : " + joueurs[0].nom);
             else Console.WriteLine("Vainqueur : " + joueurs[1].nom);
+            timer.Dispose();
+            Console.ReadLine(); 
         }
     }
 }

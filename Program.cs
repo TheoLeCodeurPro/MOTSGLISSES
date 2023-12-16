@@ -6,10 +6,10 @@ namespace motsglisses
 {
     internal class Program
     {
-        public static string relativePath; // Chemin relatif des fichier de données par rapport au fichier EXE
+        public static string relativePath; 
         static void Main(string[] args)
         {
-            relativePath = "/../../../";
+            relativePath = "/../../../"; // Chemin relatif des fichiers de données par rapport au fichier EXE
             Plateau plateau = new Plateau(8, 8);
             Jeu jeu = new Jeu();
             
@@ -24,14 +24,16 @@ namespace motsglisses
 
                 Console.Write("Votre choix : ");
                 string choix = Console.ReadLine();
+                string nomPlateauSauve = "SauvePlateau.txt";
+                string userInput;
 
                 switch (choix)
                 {
                     case "1":
                         // Jouer à partir d'un fichier
-                        string nomPlateauSauve = "SauvePlateau.txt";
                         Console.Write("Nom du fichier (si ENTER, Nom = SauvePlateau.txt) : ");
-                        string userInput = Console.ReadLine();
+                        userInput = Console.ReadLine();
+                        nomPlateauSauve = "SauvePlateau.txt";
                         if (userInput != "") nomPlateauSauve = userInput;
                         jeu = new Jeu();
                         if (plateau.ToRead(nomPlateauSauve))
@@ -44,8 +46,12 @@ namespace motsglisses
                         jeu.Jouer(plateau);
                         break;
                     case "3":
-                        // Sortir du programme
-                        Environment.Exit(0);
+                        // Sauver le dernier plateau
+                        Console.Write("Nom du fichier (si ENTER, Nom = SauvePlateau.txt) : ");
+                        userInput = Console.ReadLine();
+                        nomPlateauSauve = "SauvePlateau.txt";
+                        if (userInput != "") nomPlateauSauve = userInput;
+                        plateau.ToFile(nomPlateauSauve);
                         break;
                     case "4":
                         // Sortir du programme
