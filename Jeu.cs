@@ -13,7 +13,8 @@ namespace motsglisses
         private List<Joueur> joueurs; // Liste des 2 joueurs
         static Timer timer;
         static int duree; // duree de la partie
-        static int tempsRestant;  // duree du tour
+        static int dureeTour; // duree du tour
+        static int tempsRestant;  // temps restant dans le tour
         private int tourActuel; // Numero du tour
 
         private List<int[]> cheminMot;
@@ -45,31 +46,34 @@ namespace motsglisses
             this.plateau = p;
             AjouterJoueur();
 
-            // Initialiser le timer pour le tour du joueur et pour la partie avec la méthode à appeler et l'intervalle en millisecondes
+            // Initialisation de la durée la partie
             duree = 600;
             Console.WriteLine($"Vous avez {duree} secondes pour jouer. Tapez ENTER pour commencer");
             Console.ReadLine();
             Console.Clear();
-            Console.SetCursorPosition(0, 2);
+            // Console.SetCursorPosition(0, 2);
+            // Initialiser le timer pour le tour du joueur et pour la partie, avec la méthode à appeler et l'intervalle en millisecondes
             timer = new Timer(TimerCallback, null, 0, 1000); // 1000 ms = 1 seconde
             string mot = "";
+            // Initialiser le temps restant (30 secondes / tour)
+            dureeTour = 30;
+            tempsRestant = dureeTour;
 
             while (( duree >= 0) && plateau.LettresRestantes() && (mot != "STOPJEU"))
             {
-
+                Console.SetCursorPosition(0, 2);
                 Console.WriteLine($"Tour {tourActuel}");
                 Joueur joueurCourant = joueurs[(tourActuel - 1) % 2];
 
                 // Afficher l'état du plateau
+                Console.SetCursorPosition(0, 3);
                 Console.WriteLine("Plateau actuel :\n" + plateau.toString());
 
                 // Afficher l'état du joueur
-                Console.WriteLine(joueurCourant.toString());
+                Console.WriteLine(joueurCourant.toString()+"\n");
 
-                // Initialiser le temps restant (60 secondes / tour)
-                tempsRestant = 40;
                 // Demander au joueur de saisir un mot
-                Console.Write("\nSaisissez un mot (STOPJEU pour arreter le jeu en cours): ");
+                Console.Write("Saisissez un mot (STOPJEU pour arreter le jeu en cours): ");
                 mot = Console.ReadLine().ToUpper();
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
@@ -86,19 +90,21 @@ namespace motsglisses
                             joueurCourant.Add_Score(score);
                             plateau.Maj_Plateau(cheminMot);
                             Console.WriteLine($"Mot valide ! Score du tour : {score}, Nouveau Score de {joueurCourant.nom} : {joueurCourant.score}\n");
+                            // Passer au joueur suivant
+                            tourActuel++;
+                            tempsRestant = dureeTour;
                         }
                         else
                         {
-                            Console.WriteLine("Mot invalide ou déjà utilisé. Au joueur suivant...\n");
+                            Console.WriteLine("Mot invalide ou déjà utilisé. Veuillez rejouer...\n");
                         }
 
-                        // Passer au joueur suivant
-                        tourActuel++;
                     }
                     else
                     {
                     //timer.Dispose();
                     tourActuel++;
+                    tempsRestant = dureeTour;
                     }
             }
 
@@ -114,8 +120,8 @@ namespace motsglisses
             // Obtenir la position du curseur
             int left = Console.CursorLeft;
             int top = Console.CursorTop;
-            Console.SetCursorPosition(0, 20);
-            Console.WriteLine($"Temps restant: Pour le tour = {tempsRestant} secondes, Pour la partie = {duree} secondes");
+            Console.SetCursorPosition(0, Math.Min(40, Console.BufferHeight)-2);
+            Console.WriteLine($"Temps restant: Pour le tour = {Math.Max(tempsRestant,0)} secondes, Pour la partie = {Math.Max(duree,0)} secondes");
             Console.SetCursorPosition(left, top);
 
             if (tempsRestant <= 0)
@@ -150,8 +156,9 @@ namespace motsglisses
             {
                 Console.WriteLine($"{joueur.toString()}\n");
             }
-            if (joueurs[0].score > joueurs[1].score) Console.WriteLine("Vainqueur : " + joueurs[0].nom);
-            else Console.WriteLine("Vainqueur : " + joueurs[1].nom);
+            if (joueurs[0].score > joueurs[1].score) Console.WriteLine($"Vainqueur : {joueurs[0].nom}");
+            else if (joueurs[1].score > joueurs[0].score) Console.WriteLine($"Vainqueur : {joueurs[1].nom}");
+            else Console.WriteLine($"{joueurs[0].nom} et {joueurs[1].nom} sont ex aequo !");
             timer.Dispose();
             Console.ReadLine(); 
         }

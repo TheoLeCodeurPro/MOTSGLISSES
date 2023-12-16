@@ -35,7 +35,7 @@ namespace motsglisses
                 motss = motss.Substring(0, motss.Length - 2); ;
             }
 
-            return "Nom : " + this.nom + "\nMots trouvés : " + motss + "\nScore : " + this.score;
+            return "Nom : " + this.nom + "\nMots déjà trouvés : " + motss + "\nScore : " + this.score;
         }
         public void Add_Score(int valeur)
         {
