@@ -234,10 +234,8 @@ namespace motsglisses
         {
             if ((col >= 0) && (lig >= 0) && (col < longueur) && (lig < hauteur)) 
             {
-                // Console.WriteLine("?2: " + col + "," + lig + "," + plateau[col, lig] + " ?? " + mot[0]+" longueur"+longueur+" hauteur"+hauteur);
                 if (plateau[col, lig] == mot[0])
                 {
-                    // Console.WriteLine("OK: "+ col+","+ lig+","+plateau[col, lig]+ " == "+ mot[0]);
                     if (mot.Length > 1)
                     {
                         List<int[]>[] chemin = new List<int[]>[8];
