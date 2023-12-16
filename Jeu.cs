@@ -28,9 +28,18 @@ namespace motsglisses
 
         public void AjouterJoueur()
         {
-
-            joueurs.Add(new Joueur("Théo"));
-            joueurs.Add(new Joueur("Olivier"));
+            string nom = "";
+            Console.Write("Nom du 1er joueur  : ");
+            //int positionDebutSaisie = Console.CursorLeft;
+            while (nom == "")
+                nom = Console.ReadLine();
+            joueurs.Add(new Joueur(nom));
+            nom = "";
+            Console.Write("Nom du 2eme joueur : ");
+            while (nom == "")
+                nom = Console.ReadLine();
+            joueurs.Add(new Joueur(nom));
+            Console.WriteLine("");
         }
 
         public void Jouer(Plateau p)
@@ -74,7 +83,7 @@ namespace motsglisses
                     }
                     else
                     {
-                        Console.WriteLine("Mot invalide ou déjà utilisé. Essayez à nouveau.\n");
+                        Console.WriteLine("Mot invalide ou déjà utilisé. Au joueur suivant...\n");
                     }
 
                     // Passer au joueur suivant
