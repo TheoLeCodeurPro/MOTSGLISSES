@@ -69,8 +69,8 @@ namespace motsglisses
                         plateau[i, j] = listCar[i * longueur + j];
                     }
                 }
-            dictionnaire = new Dictionnaire("Mots_Français.txt");
-            // Console.WriteLine("Dictionnaire:" + dictionnaire.toString());
+                dictionnaire = new Dictionnaire("Mots_Français.txt");
+                // Console.WriteLine("Dictionnaire:" + dictionnaire.toString());
             }
             catch (Exception ex)
             {
@@ -137,39 +137,46 @@ namespace motsglisses
             Console.WriteLine("Plateau sauvé dans le fichier " + nomfile + "\n");
         }
 
-        public void ToRead(string nomfile)
+        public bool ToRead(string nomfile)
         {
             string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             repertoireCourant = repertoireCourant + "/../../../" + nomfile;
-
-            using (StreamReader reader = new StreamReader(repertoireCourant))
+            try
             {
-                // Lire les dimensions du plateau depuis la première ligne
-                string dimensions = reader.ReadLine();
-                string[] dimensionsArray = dimensions.Split(',');
-                int longueurLu = int.Parse(dimensionsArray[0]);
-                int hauteurLu = int.Parse(dimensionsArray[1]);
-
-                // Initialiser un nouveau plateau avec les dimensions lues
-                char[,] nouveauPlateau = new char[longueurLu, hauteurLu];
-
-                // Lire le reste du fichier et remplir le plateau
-                for (int j = (hauteurLu - 1); j >= 0; j--)
+                using (StreamReader reader = new StreamReader(repertoireCourant))
                 {
-                    string ligne = reader.ReadLine();
-                    for (int i = 0; i < longueurLu; i++)
+                    // Lire les dimensions du plateau depuis la première ligne
+                    string dimensions = reader.ReadLine();
+                    string[] dimensionsArray = dimensions.Split(',');
+                    int longueurLu = int.Parse(dimensionsArray[0]);
+                    int hauteurLu = int.Parse(dimensionsArray[1]);
+
+                    // Initialiser un nouveau plateau avec les dimensions lues
+                    char[,] nouveauPlateau = new char[longueurLu, hauteurLu];
+
+                    // Lire le reste du fichier et remplir le plateau
+                    for (int j = (hauteurLu - 1); j >= 0; j--)
                     {
-                        nouveauPlateau[i, j] = ligne[i];
+                        string ligne = reader.ReadLine();
+                        for (int i = 0; i < longueurLu; i++)
+                        {
+                            nouveauPlateau[i, j] = ligne[i];
+                        }
                     }
+
+                    // Mettre à jour le plateau actuel avec les nouvelles valeurs lues
+                    this.plateau = nouveauPlateau;
+                    this.longueur = longueurLu;
+                    this.hauteur = hauteurLu;
+                    // Console.WriteLine("Plateau chargé depuis le fichier " + nomfile + "\n");
+                    return true;
+
                 }
-
-                // Mettre à jour le plateau actuel avec les nouvelles valeurs lues
-                this.plateau = nouveauPlateau;
-                this.longueur = longueurLu;
-                this.hauteur = hauteurLu;
-
-
-                // Console.WriteLine("Plateau chargé depuis le fichier " + nomfile + "\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Une erreur s'est produite lors de la lecture du fichier : {ex.Message}");
+                return false;
             }
         }
 
