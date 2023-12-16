@@ -18,14 +18,8 @@ public class Dictionnaire
     private void ChargerDictionnaire(string cheminFichier)
     {
         string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        if (repertoireCourant.Contains("Debug"))
-        {
-            repertoireCourant = repertoireCourant+ "/../../../";
-        }
-        else
-        {
-            repertoireCourant = repertoireCourant + "/../../../";
-        }
+        repertoireCourant = repertoireCourant+ "/../../../";
+
         Console.WriteLine(repertoireCourant);
         using (StreamReader lecteur = new StreamReader(repertoireCourant+cheminFichier))
         {
@@ -53,18 +47,7 @@ public class Dictionnaire
         for (char c = 'A'; c <= 'Z'; c++)
         {
             msg += c + ":" + this.dictionnaire[c].Count + ",";
-            /*
-            if ((c == 'A') || (c == 'B'))
-            {
-                foreach (var entry in this.dictionnaire[c])
-                {
-                    Console.WriteLine(c+" - "+entry);
-                }
-            }
-            */
-            
         }
-
         return msg.TrimEnd(','); // Supprime la virgule à la fin de la chaîne
     }
 

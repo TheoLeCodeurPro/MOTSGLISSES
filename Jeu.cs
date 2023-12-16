@@ -47,7 +47,7 @@ namespace motsglisses
             this.plateau = p;
             AjouterJoueur();
 
-            while ( tempsTotal > 0) //&& (tourActuel <= joueurs.Count) & && plateau.LettresRestantes())
+            while (( tempsTotal > 0) && plateau.LettresRestantes())
             {
                 Console.WriteLine($"Tour {tourActuel}");
                 Joueur joueurCourant = joueurs[(tourActuel - 1) % 2];
@@ -61,8 +61,8 @@ namespace motsglisses
                 // Initialiser le timer pour le tour du joueur avec la méthode à appeler et l'intervalle en millisecondes
                 timer = new Timer(TimerCallback, null, 0, 1000); // 1000 ms = 1 seconde
 
-                // Initialiser le temps restant
-                tempsRestant = 90;
+                // Initialiser le temps restant (60 secondes / tour)
+                tempsRestant = 60;
                 // Demander au joueur de saisir un mot
                 Console.Write("\nSaisissez un mot : ");
                 string mot = Console.ReadLine().ToUpper();
@@ -74,7 +74,6 @@ namespace motsglisses
                     if (!joueurCourant.Contient(mot) && (cheminMot.Count>0))
                     {
                         // Mettre à jour le score du joueur et le plateau
-                        // Console.WriteLine("Poid de la lettre A:"+plateau.lettre['A'].Poids);
                         int score = CalculerScore(mot);
                         joueurCourant.Add_Mot(mot);
                         joueurCourant.Add_Score(score);

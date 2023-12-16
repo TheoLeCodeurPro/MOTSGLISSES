@@ -311,6 +311,15 @@ namespace motsglisses
             }
 
         }
+        public bool LettresRestantes()
+        {
+            bool lr = false;
+            for (int i = 0;i < longueur;i++)
+                for (int j = 0; j < hauteur;j++)
+                    if (plateau[i, j] !=' ')
+                        lr = true;
+            return lr;
+        }
     }
 }
 
