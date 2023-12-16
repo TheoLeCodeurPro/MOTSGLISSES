@@ -26,6 +26,8 @@ namespace motsglisses
                 string choix = Console.ReadLine();
                 string nomPlateauSauve = "SauvePlateau.txt";
                 string userInput;
+                int longueur;
+                int hauteur;
 
                 switch (choix)
                 {
@@ -33,7 +35,7 @@ namespace motsglisses
                         // Jouer à partir d'un fichier
                         Console.Write("Nom du fichier à charger (si ENTER, chargement du dernier plateau) : ");
                         userInput = Console.ReadLine();
-                        nomPlateauSauve = "SauvePlateau.txt";
+                        nomPlateauSauve = "LastPlateau.txt";
                         if (userInput != "") nomPlateauSauve = userInput;
                         jeu = new Jeu();
                         if (plateau.ToRead(nomPlateauSauve))
@@ -45,14 +47,30 @@ namespace motsglisses
                     case "2":
                         // Jouer à partir d'un plateau généré aléatoirement
                         jeu = new Jeu();
-                        plateau = new Plateau(8, 8);
-                        plateau.ToFile("LastPlateau.txt");
-                        jeu.Jouer(plateau);
+                        longueur = 8;
+                        hauteur = 8;
+                        Console.Write("Dimension horizontale du plateau (>=5) (ENTER = 8) :");
+                        userInput = Console.ReadLine();
+                        if ((!int.TryParse(userInput, out longueur) && (userInput != "")) || (longueur<5))
+                            Console.WriteLine("Dimension invalide !");
+                        else if (longueur == 0) longueur = 8;
+                        Console.Write("Dimension verticale du plateau   (>=5) (ENTER = 8) :");
+                        userInput = Console.ReadLine();
+                        if ((!int.TryParse(userInput, out hauteur) && (userInput!="")) || (hauteur < 5))
+                            Console.WriteLine("Dimension invalide !");
+                        else if (hauteur == 0) hauteur = 8;
+                        if ((longueur >= 5) && (hauteur >=5))
+                        {
+                            plateau = new Plateau(longueur, hauteur);
+                            plateau.ToFile("LastPlateau.txt");
+                            jeu.Jouer(plateau);
+                        }
                         break;
                     case "3":
-                        // Sauver le dernier plateau
-                        Console.Write("Nom du fichier (si ENTER, Nom = SauvePlateau.txt) : ");
+                        // Sauver le dernier plateau dans un fichier
+                        Console.Write("Nom du fichier (si ENTER, sauvegarde du dernier plateau) : ");
                         userInput = Console.ReadLine();
+                        nomPlateauSauve = "LastPlateau.txt";
                         if (userInput != "") nomPlateauSauve = userInput;
                         plateau.ToRead("LastPlateau.txt");
                         plateau.ToFile(nomPlateauSauve);
