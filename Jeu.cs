@@ -117,8 +117,10 @@ namespace motsglisses
             {
                 // Arrêter le timer lorsque le temps est écoulé
                 timer.Dispose();
-                Console.WriteLine("Le temps est écoulé ! Pressez une touche pour que votre adversaire puisse jouer");
-                Console.ReadLine();
+                if (tempsRestant == 0)
+                    Console.WriteLine("Le temps est écoulé ! Pressez une touche pour que votre adversaire puisse jouer");
+                else
+                    Console.ReadLine();
             }
         }
  
