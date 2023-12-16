@@ -70,7 +70,7 @@ namespace motsglisses
                     }
                 }
             dictionnaire = new Dictionnaire("Mots_Français.txt");
-            Console.WriteLine("Dictionnaire:" + dictionnaire.toString());
+            // Console.WriteLine("Dictionnaire:" + dictionnaire.toString());
             }
             catch (Exception ex)
             {
@@ -214,7 +214,7 @@ namespace motsglisses
                 }
                 else 
                     { 
-                        Console.WriteLine("Mot n'existe pas");
+                        Console.WriteLine("Ce mot n'existe pas");
                     }
                 
             }

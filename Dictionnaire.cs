@@ -20,7 +20,7 @@ public class Dictionnaire
         string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         repertoireCourant = repertoireCourant+ "/../../../";
 
-        Console.WriteLine(repertoireCourant);
+        // Console.WriteLine(repertoireCourant);
         using (StreamReader lecteur = new StreamReader(repertoireCourant+cheminFichier))
         {
             string ligne;

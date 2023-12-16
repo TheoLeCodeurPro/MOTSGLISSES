@@ -49,9 +49,10 @@ namespace motsglisses
             duree = 600;
             Console.WriteLine($"Vous avez {duree} secondes pour jouer. Tapez ENTER pour commencer");
             Console.ReadLine();
-            timer = new Timer(TimerCallback, null, 0, 1000); // 1000 ms = 1 seconde
             Console.Clear();
             Console.SetCursorPosition(0, 2);
+            timer = new Timer(TimerCallback, null, 0, 1000); // 1000 ms = 1 seconde
+
 
             while (( duree >= 0) && plateau.LettresRestantes())
             {
@@ -66,7 +67,7 @@ namespace motsglisses
                 Console.WriteLine(joueurCourant.toString());
 
                 // Initialiser le temps restant (60 secondes / tour)
-                tempsRestant = 20;
+                tempsRestant = 40;
                 // Demander au joueur de saisir un mot
                 Console.Write("\nSaisissez un mot : ");
                 string mot = Console.ReadLine().ToUpper();
@@ -110,7 +111,12 @@ namespace motsglisses
             tempsRestant--;
             duree--;
 
-            Console.WriteLine($"Temps restant: Pour le tour = {tempsRestant} secondes, Pouir la partie = {duree} secondes");
+            // Obtenir la position du curseur
+            int left = Console.CursorLeft;
+            int top = Console.CursorTop;
+            Console.SetCursorPosition(0, 20);
+            Console.WriteLine($"Temps restant: Pour le tour = {tempsRestant} secondes, Pour la partie = {duree} secondes");
+            Console.SetCursorPosition(left, top);
 
             if (tempsRestant <= 0)
             // Afficher le message que le temps est écoulé
@@ -122,7 +128,7 @@ namespace motsglisses
             // Afficher le message que le temps est écoulé
             {
                 if (duree == 0)
-                    Console.WriteLine("Temps écoulé pour la parti ! Pressez sur ENTER pour continuer");
+                    Console.WriteLine("Temps écoulé pour la partie ! Pressez sur ENTER pour continuer");
             }
         }
  

@@ -13,6 +13,7 @@ namespace motsglisses
             
             while (true)
             {
+                // Console.Clear();
                 Console.WriteLine("Menu principal:");
                 Console.WriteLine("1 - Jouer à partir d'un fichier");
                 Console.WriteLine("2 - Jouer à partir d'un plateau généré aléatoirement");
@@ -26,7 +27,11 @@ namespace motsglisses
                     case "1":
                         // Jouer à partir d'un fichier
                         jeu = new Jeu();
-                        plateau.ToRead("SauvePlateau.txt");
+                        string nomPlateauSauve = "SauvePlateau.txt";
+                        Console.Write("Nom du fichier (si ENTER, Nom = SauvePlateau.txt) : ");
+                        string userInput = Console.ReadLine();
+                        if (userInput != "") nomPlateauSauve = userInput;
+                        plateau.ToRead(nomPlateauSauve);
                         jeu.Jouer(plateau);
                         break;
                     case "2":
