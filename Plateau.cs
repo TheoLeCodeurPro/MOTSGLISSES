@@ -307,7 +307,7 @@ namespace motsglisses
                         j--;
                     }
                 }
-                Affiche_Chemin(chemin);
+                // Affiche_Chemin(chemin);
             }
 
         }

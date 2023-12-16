@@ -28,6 +28,7 @@ namespace motsglisses
 
         public void AjouterJoueur()
         {
+
             joueurs.Add(new Joueur("Théo"));
             joueurs.Add(new Joueur("Olivier"));
         }
@@ -52,13 +53,13 @@ namespace motsglisses
                 timer = new Timer(TimerCallback, null, 0, 1000); // 1000 ms = 1 seconde
 
                 // Initialiser le temps restant
-                tempsRestant = 60;
+                tempsRestant = 90;
+                // Demander au joueur de saisir un mot
+                Console.Write("\nSaisissez un mot : ");
+                string mot = Console.ReadLine().ToUpper();
 
-                if (tempsRestant > 0)
+                if (tempsRestant >= 0)
                 {
-                    // Demander au joueur de saisir un mot
-                    Console.Write("Saisissez un mot : ");
-                    string mot = Console.ReadLine().ToUpper();
                     cheminMot = plateau.Recherche_Mot(mot);
                     // Vérifier si le mot est valide
                     if (!joueurCourant.Contient(mot) && (cheminMot.Count>0))
@@ -69,11 +70,11 @@ namespace motsglisses
                         joueurCourant.Add_Mot(mot);
                         joueurCourant.Add_Score(score);
                         plateau.Maj_Plateau(cheminMot);
-                        Console.WriteLine($"Mot valide ! Score du tour : {score}");
+                        Console.WriteLine($"Mot valide ! Score du tour : {score}, Nouveau Score de {joueurCourant.nom} : {joueurCourant.score}\n");
                     }
                     else
                     {
-                        Console.WriteLine("Mot invalide ou déjà utilisé. Essayez à nouveau.");
+                        Console.WriteLine("Mot invalide ou déjà utilisé. Essayez à nouveau.\n");
                     }
 
                     // Passer au joueur suivant
@@ -81,7 +82,7 @@ namespace motsglisses
                 }
                 else
                 {
-                    Console.WriteLine("Temps écoulé pour ce tour !");
+                    timer.Dispose();
                     tourActuel++;
                 }
             }
@@ -111,24 +112,23 @@ namespace motsglisses
             // Cette méthode est appelée à chaque intervalle du timer (toutes les secondes dans cet exemple)
             tempsRestant--;
 
-            // Console.WriteLine($"Temps restant : {tempsRestant} secondes");
-
+            //Console.WriteLine($"Temps restant : {tempsRestant} secondes");
             if (tempsRestant <= 0)
+            // Afficher le message que le temps est écoulé
             {
-                // Arrêter le timer lorsque le temps est écoulé
-                timer.Dispose();
+                //timer.Dispose();
                 if (tempsRestant == 0)
-                    Console.WriteLine("Le temps est écoulé ! Pressez une touche pour que votre adversaire puisse jouer");
-                else
-                    Console.ReadLine();
+                    Console.WriteLine("Temps écoulé pour ce tour ! Pressez sur ENTER pour continuer");
             }
+
+            
+            
         }
  
         private int CalculerScore(string mot)
         {
-            // Logique de calcul du score (à adapter selon les règles du jeu)
-            int score = 0;
-            Console.WriteLine("Poid de la lettre A:" + plateau.lettre['A'].Poids);
+            //  Score = Longueur du mot + somme des poids des lettres que le compose
+            int score = mot.Length;
             foreach (char lettre in mot)
             {
                 score += plateau.lettre[lettre].Poids;

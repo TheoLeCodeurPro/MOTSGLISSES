@@ -24,15 +24,13 @@ namespace motsglisses
                 switch (choix)
                 {
                     case "1":
-                        // Logique pour jouer à partir d'un fichier
-                        Console.WriteLine("Logique pour jouer à partir d'un fichier");
+                        // Jouer à partir d'un fichier
                         jeu = new Jeu();
                         plateau.ToRead("SauvePlateau.txt");
                         jeu.Jouer(plateau);
                         break;
                     case "2":
-                        // Logique pour jouer à partir d'un plateau généré aléatoirement
-                        Console.WriteLine("Logique pour jouer à partir d'un plateau généré aléatoirement.");
+                        // Jouer à partir d'un plateau généré aléatoirement
                         jeu = new Jeu();
                         plateau = new Plateau(8, 8);
                         jeu.Jouer(plateau);
