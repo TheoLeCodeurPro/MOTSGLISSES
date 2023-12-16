@@ -6,8 +6,10 @@ namespace motsglisses
 {
     internal class Program
     {
+        public static string relativePath; // Chemin relatif des fichier de données par rapport au fichier EXE
         static void Main(string[] args)
         {
+            relativePath = "/../../../";
             Plateau plateau = new Plateau(8, 8);
             Jeu jeu = new Jeu();
             

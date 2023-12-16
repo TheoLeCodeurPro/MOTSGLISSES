@@ -1,4 +1,5 @@
-﻿using System;
+﻿using motsglisses;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Linq;
 public class Dictionnaire
 {
     public Dictionary<char, List<string>> dictionnaire;
+    public static string relativePath;
 
     public Dictionnaire(string cheminFichier)
     {
@@ -18,7 +20,7 @@ public class Dictionnaire
     private void ChargerDictionnaire(string cheminFichier)
     {
         string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        repertoireCourant = repertoireCourant+ "/../../../";
+        repertoireCourant = repertoireCourant+ Program.relativePath;
 
         // Console.WriteLine(repertoireCourant);
         using (StreamReader lecteur = new StreamReader(repertoireCourant+cheminFichier))

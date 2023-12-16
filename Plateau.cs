@@ -17,6 +17,7 @@ namespace motsglisses
         public Dictionary<char, LetterInfo> lettre;
         private List<char> listCar;
         public static Dictionnaire dictionnaire;
+        public static string relativePath;
 
         public Plateau(int longueur, int hauteur)
         {
@@ -35,7 +36,7 @@ namespace motsglisses
             try
             {
                 string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                repertoireCourant = repertoireCourant + "/../../../Lettre.txt";
+                repertoireCourant = repertoireCourant + Program.relativePath +"Lettre.txt";
 
                 using (StreamReader reader = new StreamReader(repertoireCourant))
                 {
@@ -119,7 +120,7 @@ namespace motsglisses
         public void ToFile(string nomfile)
         {
             string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            repertoireCourant = repertoireCourant + "/../../../" + nomfile;
+            repertoireCourant = repertoireCourant + Program.relativePath + nomfile;
 
             using (StreamWriter writer = new StreamWriter(repertoireCourant))
             {
@@ -140,7 +141,7 @@ namespace motsglisses
         public bool ToRead(string nomfile)
         {
             string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            repertoireCourant = repertoireCourant + "/../../../" + nomfile;
+            repertoireCourant = repertoireCourant + Program.relativePath + nomfile;
             try
             {
                 using (StreamReader reader = new StreamReader(repertoireCourant))
