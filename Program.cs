@@ -13,7 +13,7 @@ namespace motsglisses
             
             while (true)
             {
-                // Console.Clear();
+                Console.Clear();
                 Console.WriteLine("Menu principal:");
                 Console.WriteLine("1 - Jouer à partir d'un fichier");
                 Console.WriteLine("2 - Jouer à partir d'un plateau généré aléatoirement");
