@@ -14,9 +14,9 @@ namespace motsglisses
         char[,] plateau;
         int longueur;
         int hauteur;
-        private Dictionary<char, LetterInfo> lettre;
+        public Dictionary<char, LetterInfo> lettre;
         private List<char> listCar;
-        public Dictionnaire dico;
+        public static Dictionnaire dictionnaire;
 
         public Plateau(int longueur, int hauteur)
         {
@@ -69,7 +69,8 @@ namespace motsglisses
                         plateau[i, j] = listCar[i * longueur + j];
                     }
                 }
-
+            dictionnaire = new Dictionnaire("Mots_Français.txt");
+            Console.WriteLine("Dictionnaire:" + dictionnaire.toString());
             }
             catch (Exception ex)
             {
@@ -168,7 +169,7 @@ namespace motsglisses
                 this.hauteur = hauteurLu;
 
 
-                Console.WriteLine("Plateau chargé depuis le fichier " + nomfile + "\n");
+                // Console.WriteLine("Plateau chargé depuis le fichier " + nomfile + "\n");
             }
         }
 
@@ -191,7 +192,7 @@ namespace motsglisses
         {
             if (mot.Length > 0)
             {
-                if (dico.RechDichoRecursif(mot))
+                if (dictionnaire.RechDichoRecursif(mot))
                 {
                     for (int i = 0; i < longueur; i++)
                     {

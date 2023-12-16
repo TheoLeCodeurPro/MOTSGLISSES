@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Dictionnaire
 {
-    private Dictionary<char, List<string>> dictionnaire;
+    public Dictionary<char, List<string>> dictionnaire;
 
     public Dictionnaire(string cheminFichier)
     {

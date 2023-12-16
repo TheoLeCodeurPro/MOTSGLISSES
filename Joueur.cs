@@ -8,9 +8,9 @@ namespace motsglisses
 {
     internal class Joueur
     {
-        string nom;
-        List<string> mots;
-        int score;
+        public string nom;
+        public List<string> mots;
+        public int score;
 
         public Joueur(string nom)
         {
