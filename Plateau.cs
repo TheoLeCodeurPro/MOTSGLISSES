@@ -135,7 +135,7 @@ namespace motsglisses
                     writer.WriteLine();
                 }
             }
-            Console.WriteLine("Plateau sauvé dans le fichier " + nomfile + "\n");
+            // Console.WriteLine("Plateau sauvé dans le fichier " + nomfile + "\n");
         }
 
         public bool ToRead(string nomfile)
@@ -170,9 +170,8 @@ namespace motsglisses
                     this.longueur = longueurLu;
                     this.hauteur = hauteurLu;
                     // Console.WriteLine("Plateau chargé depuis le fichier " + nomfile + "\n");
-                    return true;
-
                 }
+                return true;
             }
             catch (Exception ex)
             {
@@ -241,6 +240,20 @@ namespace motsglisses
                     // Console.WriteLine("OK: "+ col+","+ lig+","+plateau[col, lig]+ " == "+ mot[0]);
                     if (mot.Length > 1)
                     {
+                        List<int[]>[] chemin = new List<int[]>[8];
+                        int k = 0;
+                        for (int i=-1;i<=1; i++)
+                            for (int j=-1;j<=1; j++)
+                            {
+                                if ((i!=0) && (j!=0))
+                                { 
+                                k++;
+                                chemin[k] = RechercheMotRecursif(col +i, lig+j, mot.Substring(1));
+                                if (chemin[k].Count > 0) { chemin[k].Add(new int[] { col, lig }); return chemin[k]; }
+                                }
+                            }
+
+                        /*
                         List<int[]> chemin1 = RechercheMotRecursif(col - 1, lig, mot.Substring(1));
                         if (chemin1.Count > 0) { chemin1.Add(new int[] { col , lig }); return chemin1; }
                         List<int[]> chemin2 = RechercheMotRecursif(col + 1, lig, mot.Substring(1));
@@ -257,6 +270,7 @@ namespace motsglisses
                         if (chemin7.Count > 0) { chemin7.Add(new int[] { col, lig }); return chemin7; }
                         List<int[]> chemin8 = RechercheMotRecursif(col + 1, lig - 1, mot.Substring(1));
                         if (chemin8.Count > 0) { chemin8.Add(new int[] { col, lig}); return chemin8; }
+                        */
                     }
                     else
                     {
@@ -328,6 +342,16 @@ namespace motsglisses
                         lr = true;
             return lr;
         }
+        public Plateau Clone()
+        {
+            return new Plateau(longueur,hauteur)
+            {
+                longueur = this.longueur,
+                hauteur = this.hauteur,
+                plateau = (char[,])this.plateau.Clone() // Copie du tableau
+            };
+        }
+
     }
 }
 
