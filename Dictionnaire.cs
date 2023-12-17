@@ -9,6 +9,11 @@ public class Dictionnaire
     public Dictionary<char, List<string>> dictionnaire;
     public static string relativePath;
 
+
+    /// <summary>
+    /// Permet de créer et de trier le dictionnaire que l'on va utiliser pour la partie
+    /// </summary>
+    /// <param name="cheminFichier"> Chemin pour ouvrir dictionnaire </param>
     public Dictionnaire(string cheminFichier)
     {
         this.dictionnaire = new Dictionary<char, List<string>>();
@@ -17,6 +22,11 @@ public class Dictionnaire
 
     }
 
+
+    /// <summary>
+    /// Permet de charger le fichier comme un dictionnaire
+    /// </summary>
+    /// <param name="cheminFichier"> Chemin pour ouvrir dictionnaire </param>
     private void ChargerDictionnaire(string cheminFichier)
     {
         string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -43,6 +53,10 @@ public class Dictionnaire
     }
 
 
+    /// <summary>
+    /// Permet de créer une chaine de caractère de la langue et le nombre de mot par lettre dans le dictionnaire
+    /// </summary>
+    /// <returns> Retourne la chaine de caractère décrivant le dictionnaire </returns>
     public string toString()
     {
         string msg = "Langue = fr : ";
@@ -53,6 +67,12 @@ public class Dictionnaire
         return msg.TrimEnd(','); // Supprime la virgule à la fin de la chaîne
     }
 
+
+    /// <summary>
+    /// Permet de rechercher un mot dans le dictionnaire pour vérifier si il existe
+    /// </summary>
+    /// <param name="mot"> C'est le mot que l'on essaye de chercher </param>
+    /// <returns> Retourne true si le mot existe et retourne false si le mot n'est pas dans le dictionnaire </returns>
     public bool RechDichoRecursif(string mot)
     {
         char premiereLettre = mot[0];
@@ -66,6 +86,15 @@ public class Dictionnaire
         return false;
     }
 
+
+    /// <summary>
+    /// Permet de chercher récursivement si le mot est dans le dictionnaire
+    /// </summary>
+    /// <param name="mot"> Mot que l'on cherche </param>
+    /// <param name="debut"> Indice de l'endroit de début de la recherche </param>
+    /// <param name="fin"> Indice de l'endroit où se fini la recherche </param>
+    /// <param name="mots"> C'est la liste des mots commençant par la même lettre que le mot que l'on cherche </param>
+    /// <returns> Retourne true si le mot est dans le dictionnaire </returns>
     private bool RechRec(string mot, int debut, int fin, List<string> mots)
     {
         if (debut <= fin)
@@ -88,6 +117,10 @@ public class Dictionnaire
         return false;
     }
 
+
+    /// <summary>
+    /// Permet de trier le dictionnaire
+    /// </summary>
     public void Tri_Fusion()
     {
         for (char c = 'A'; c <= 'Z'; c++)
@@ -96,6 +129,12 @@ public class Dictionnaire
         }
     }
 
+
+    /// <summary>
+    /// Tri le dictionnaire grâce au tri fusion
+    /// </summary>
+    /// <param name="listeMots"></param>
+    /// <returns></returns>
     private List<string> Tri(List<string> listeMots)
     {
         if (listeMots.Count <= 1)
@@ -112,6 +151,13 @@ public class Dictionnaire
         }
     }
 
+
+    /// <summary>
+    /// Refusionne et tri deux liste pour n'en faire qu'une
+    /// </summary>
+    /// <param name="listeGauche"> Première liste à fusionner </param>
+    /// <param name="listeDroite"> Deuxième liste à fusionner </param>
+    /// <returns> Retourne la liste finale </returns>
     private List<string> Fusion(List<string> listeGauche, List<string> listeDroite )
     {
         List<string> listeFinale = new List<string>(); 

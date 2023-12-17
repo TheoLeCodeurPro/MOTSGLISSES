@@ -19,12 +19,20 @@ namespace motsglisses
 
         private List<int[]> cheminMot;
 
+
+        /// <summary>
+        /// Constructeur de la classe Jeu
+        /// </summary>
         public Jeu()
         {
             this.tourActuel = 1;
             this.joueurs = new List<Joueur>();
         }
 
+
+        /// <summary>
+        /// Permet la création des deux joueurs
+        /// </summary>
         public void AjouterJoueur()
         {
             string nom = "";
@@ -41,6 +49,11 @@ namespace motsglisses
             Console.WriteLine("");
         }
 
+
+        /// <summary>
+        /// Permet de lancer la partie 
+        /// </summary>
+        /// <param name="p"> C'est le plateau sur lequel la partie va se dérouler </param>
         public void Jouer(Plateau p)
         {
             this.plateau = p;
@@ -51,7 +64,7 @@ namespace motsglisses
             Console.WriteLine($"Vous avez {duree} secondes pour jouer. Tapez ENTER pour commencer");
             Console.ReadLine();
             Console.Clear();
-            // Console.SetCursorPosition(0, 2);
+            Console.SetCursorPosition(0, 0);
             // Initialiser le timer pour le tour du joueur et pour la partie, avec la méthode à appeler et l'intervalle en millisecondes
             timer = new Timer(TimerCallback, null, 0, 1000); // 1000 ms = 1 seconde
             string mot = "";
@@ -111,6 +124,12 @@ namespace motsglisses
             // Afficher le résultat final
             AfficherResultatFinal();
         }
+
+
+        /// <summary>
+        /// Permet d'avoir un timer et de l'afficher 
+        /// </summary>
+        /// <param name="state"></param>
         private static void TimerCallback(object state)
         {
             // Cette méthode est appelée à chaque intervalle du timer (toutes les secondes dans cet exemple)
@@ -138,6 +157,12 @@ namespace motsglisses
             }
         }
  
+
+        /// <summary>
+        /// Calcule le score grâce au poid de la lettre et à la longueur du mot
+        /// </summary>
+        /// <param name="mot"> Le mot qui à été rentré par le joueur </param>
+        /// <returns> Retourne le nouveau score du joueur </returns>
         private int CalculerScore(string mot)
         {
             //  Score = Longueur du mot + somme des poids des lettres que le compose
@@ -149,6 +174,10 @@ namespace motsglisses
             return score;
         }
 
+
+        /// <summary>
+        /// Permet d'afficher à la fin de la partie le gagnant, le nombre de point de chacun et les mots qu'ils ont trouvés
+        /// </summary>
         private void AfficherResultatFinal()
         {
             Console.WriteLine("Partie terminée ! Résultats finaux :");

@@ -19,6 +19,12 @@ namespace motsglisses
         public static Dictionnaire dictionnaire;
         public static string relativePath;
 
+
+        /// <summary>
+        /// Constructeur de la classe Plateau
+        /// </summary>
+        /// <param name="longueur"> Longueur du plateau que l'on est entrain de créer </param>
+        /// <param name="hauteur"> Hauteur du plateau </param>
         public Plateau(int longueur, int hauteur)
         {
             this.longueur = longueur;
@@ -79,7 +85,12 @@ namespace motsglisses
             }
         }
 
-        // Melange du tableau selon l' algorithme de Fisher-Yates 
+
+        /// <summary>
+        /// Mélange du tableau selon l'algorithm de Fisher-Yates
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="liste"> C'est la liste que l'on veut mélanger </param>
         static void MelangerListe<T>(List<T> liste)
         {
             Random rand = new Random();
@@ -95,6 +106,12 @@ namespace motsglisses
             }
         }
 
+
+        /// <summary>
+        /// Permet d'afficher une liste
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="liste"> C'est la liste que l'on veut afficher </param>
         static void AfficherListe<T>(List<T> liste)
         {
             foreach (var element in liste)
@@ -104,6 +121,11 @@ namespace motsglisses
             Console.WriteLine();
         }
 
+
+        /// <summary>
+        /// Permet de retourner une chaîne de caractère décrivant le plateau
+        /// </summary>
+        /// <returns> La chaîne de caractère du plateau </returns>
         public string toString()
         {
             string desplateau = "";
@@ -117,6 +139,12 @@ namespace motsglisses
             }
             return desplateau;
         }
+
+
+        /// <summary>
+        /// Permet de créer un fichier grâce au plateau de jeu
+        /// </summary>
+        /// <param name="nomfile"> Le nom du fichier que l'on veut créer </param>
         public void ToFile(string nomfile)
         {
             string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -124,7 +152,7 @@ namespace motsglisses
 
             using (StreamWriter writer = new StreamWriter(repertoireCourant))
             {
-                writer.Write(longueur + "," + hauteur);
+                writer.Write(this.longueur + "," + this.hauteur);
                 writer.WriteLine();
                 for (int j = (this.hauteur - 1); j >= 0; j--)
                 {
@@ -138,6 +166,12 @@ namespace motsglisses
             // Console.WriteLine("Plateau sauvé dans le fichier " + nomfile + "\n");
         }
 
+
+        /// <summary>
+        /// Permet de créer un plateau grâce a un fichier
+        /// </summary>
+        /// <param name="nomfile"> Le nom du fichier que l'on veut ouvrir </param>
+        /// <returns></returns>
         public bool ToRead(string nomfile)
         {
             string repertoireCourant = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -163,7 +197,7 @@ namespace motsglisses
                         string ligne = reader.ReadLine();
                         for (int i = 0; i < longueurLu; i++)
                         {
-                            nouveauPlateau[i, j] = ligne[i];
+                            nouveauPlateau[i, j] = char.ToUpper(ligne[i]);
                         }
                     }
 
@@ -182,7 +216,7 @@ namespace motsglisses
             }
         }
 
-
+        
         // Classe pour stocker les informations associées à une lettre
         public class LetterInfo
         {
@@ -197,6 +231,12 @@ namespace motsglisses
             }
         }
 
+
+        /// <summary>
+        /// Permet chercher si le mot entré existe bien et si il est sur le plateau
+        /// </summary>
+        /// <param name="mot"> C'est le mot entré par l'utilisateur </param>
+        /// <returns> Retourne une liste des coordonnées du chemin qui decrive le mot </returns>
         public List<int[]> Recherche_Mot(string mot)
         {
             if (mot.Length > 0)
@@ -210,15 +250,20 @@ namespace motsglisses
                             int[] caseActuelle = new int[] { i, 0 };
                             List<int[]> cheminForward = new List<int[]> { caseActuelle };
                             List<int[]> chemin1 = RechercheMotRecursif(i - 1, 0, mot.Substring(1), cheminForward);
-                            if (chemin1.Count > 0) return cheminForward;
+                            if (chemin1.Count > 0) 
+                                return cheminForward;
                             List<int[]> chemin2 = RechercheMotRecursif(i - 1, 1, mot.Substring(1), cheminForward);
-                            if (chemin2.Count > 0) return cheminForward;
+                            if (chemin2.Count > 0) 
+                                return cheminForward;
                             List<int[]> chemin3 = RechercheMotRecursif(i, 1, mot.Substring(1), cheminForward);
-                            if (chemin3.Count > 0) return cheminForward;
+                            if (chemin3.Count > 0) 
+                                return cheminForward;
                             List<int[]> chemin4 = RechercheMotRecursif(i + 1, 1, mot.Substring(1), cheminForward);
-                            if (chemin4.Count > 0) return cheminForward;
+                            if (chemin4.Count > 0) 
+                                return cheminForward;
                             List<int[]> chemin5 = RechercheMotRecursif(i + 1, 0, mot.Substring(1), cheminForward);
-                            if (chemin5.Count > 0) return cheminForward;
+                            if (chemin5.Count > 0) 
+                                return cheminForward;
                             cheminForward = new List<int[]>();
                         }
                     }
@@ -228,7 +273,14 @@ namespace motsglisses
         }
 
 
-
+        /// <summary>
+        /// Permet de la recherche récursive des lettres qui compose le mot
+        /// </summary>
+        /// <param name="col"> Indice de la colonne où se trouve la lettre </param>
+        /// <param name="lig"> Indice de la ligne où se trouve la lettre </param>
+        /// <param name="mot"> Mot que l'on essaye de trouver sur le plateau </param>
+        /// <param name="cheminForward"> Liste des coordonnées du chemin que l'on a fais </param>
+        /// <returns></returns>
         private List<int[]> RechercheMotRecursif(int col, int lig, string mot, List<int[]> cheminForward)
         {
             if ((col >= 0) && (lig >= 0) && (col < longueur) && (lig < hauteur)) 
@@ -241,28 +293,52 @@ namespace motsglisses
                     {
                         List<int[]> chemin1 = RechercheMotRecursif(col - 1, lig, mot.Substring(1), cheminForward);
                         if (chemin1.Count > 0)
-                        { chemin1.Add(caseActuelle); return chemin1; }
+                        { 
+                            chemin1.Add(caseActuelle); 
+                            return chemin1; 
+                        }
                         List<int[]> chemin2 = RechercheMotRecursif(col + 1, lig, mot.Substring(1), cheminForward);
                         if (chemin2.Count > 0)
-                        { chemin2.Add(caseActuelle); return chemin2; }
+                        { 
+                            chemin2.Add(caseActuelle); 
+                            return chemin2; 
+                        }
                         List<int[]> chemin3 = RechercheMotRecursif(col, lig - 1, mot.Substring(1), cheminForward);
                         if (chemin3.Count > 0)
-                        { chemin3.Add(caseActuelle); return chemin3; }
+                        { 
+                            chemin3.Add(caseActuelle); 
+                            return chemin3; 
+                        }
                         List<int[]> chemin4 = RechercheMotRecursif(col, lig + 1, mot.Substring(1), cheminForward);
                         if (chemin4.Count > 0) 
-                        { chemin4.Add(caseActuelle); return chemin4; }
+                        { 
+                            chemin4.Add(caseActuelle); 
+                            return chemin4; 
+                        }
                         List<int[]> chemin5 = RechercheMotRecursif(col - 1, lig + 1, mot.Substring(1), cheminForward);
                         if (chemin5.Count > 0)
-                        { chemin5.Add(caseActuelle); return chemin5; }
+                        { 
+                            chemin5.Add(caseActuelle); 
+                            return chemin5; 
+                        }
                         List<int[]> chemin6 = RechercheMotRecursif(col + 1, lig + 1, mot.Substring(1), cheminForward);
                         if (chemin6.Count > 0)
-                        { chemin6.Add(caseActuelle); return chemin6; }
+                        { 
+                            chemin6.Add(caseActuelle); 
+                            return chemin6; 
+                        }
                         List<int[]> chemin7 = RechercheMotRecursif(col - 1, lig - 1, mot.Substring(1), cheminForward);
                         if (chemin7.Count > 0) 
-                        { chemin7.Add(caseActuelle); return chemin7; }
+                        { 
+                            chemin7.Add(caseActuelle); 
+                            return chemin7; 
+                        }
                         List<int[]> chemin8 = RechercheMotRecursif(col + 1, lig - 1, mot.Substring(1), cheminForward);
                         if (chemin8.Count > 0) 
-                        { chemin8.Add(caseActuelle); return chemin8; }
+                        { 
+                            chemin8.Add(caseActuelle); 
+                            return chemin8; 
+                        }
                         cheminForward.RemoveAt(cheminForward.Count - 1);
                     }
                     else
@@ -276,6 +352,11 @@ namespace motsglisses
 
         }
 
+
+        /// <summary>
+        /// Permet d'afficher le chemin pour faire un mot composé de plusieurs couple de coordonnées
+        /// </summary>
+        /// <param name="chemin"> Liste des coordonnées nécessaire pour faire un mot </param>
         public void Affiche_Chemin(List<int[]> chemin)
         {
             string message = "";
@@ -291,9 +372,12 @@ namespace motsglisses
 
         }
 
-            
 
 
+        /// <summary>
+        /// Permet de mettre à jour le plateau en enlevant les lettres qui se trouve sur le chemin du mot
+        /// </summary>
+        /// <param name="chemin"> Liste des coordonnées nécessaire pour faire un mot </param>
         public void Maj_Plateau(List<int[]> chemin)
         {
 
@@ -326,6 +410,12 @@ namespace motsglisses
             }
 
         }
+
+
+        /// <summary>
+        /// Permet de vérifier si il reste des lettres sur le plateau
+        /// </summary>
+        /// <returns> Retourne vrai si il reste des lettres, faux si le plateau est vide </returns>
         public bool LettresRestantes()
         {
             bool lr = false;
@@ -335,6 +425,12 @@ namespace motsglisses
                         lr = true;
             return lr;
         }
+
+
+        /// <summary>
+        /// Permet de cloner le tableau
+        /// </summary>
+        /// <returns> Retourne un clone du tableau de jeu </returns>
         public Plateau Clone()
         {
             return new Plateau(longueur,hauteur)
