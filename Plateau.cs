@@ -151,8 +151,8 @@ namespace motsglisses
                     string[] dimensionsArray = dimensions.Split(',');
                     int longueurLu = int.Parse(dimensionsArray[0]);
                     int hauteurLu = int.Parse(dimensionsArray[1]);
-                    Console.WriteLine("long:" + longueurLu + " hauteur:" + hauteurLu);
-                    Console.ReadLine();
+                    Console.WriteLine("Longueur:" + longueurLu + " Hauteur:" + hauteurLu);
+                    // Console.ReadLine();
 
                     // Initialiser un nouveau plateau avec les dimensions lues
                     char[,] nouveauPlateau = new char[longueurLu, hauteurLu];
@@ -207,25 +207,31 @@ namespace motsglisses
                     {
                         if (this.plateau[i, 0] == mot[0])
                         {
+                            int[] caseActuelle = new int[] { i, 0 };    
                             List<int[]> chemin1 = RechercheMotRecursif(i - 1, 0, mot.Substring(1));
-                            if (chemin1.Count > 0) { chemin1.Add(new int[] { i, 0 }); return chemin1;  }
+                            if ((chemin1.Count > 0) && (!chemin1.Any(element => Enumerable.SequenceEqual(element, caseActuelle)))) 
+                            { chemin1.Add(caseActuelle); return chemin1; }
                             List<int[]> chemin2 = RechercheMotRecursif(i - 1, 1, mot.Substring(1));
-                            if (chemin2.Count > 0) { chemin2.Add(new int[] { i, 0 }); return chemin2; }
+                            if ((chemin2.Count > 0) && (!chemin2.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                            { chemin2.Add(caseActuelle); return chemin2; }
                             List<int[]> chemin3 = RechercheMotRecursif(i, 1, mot.Substring(1));
-                            if (chemin3.Count > 0) { chemin3.Add(new int[] { i, 0 }); return chemin3; }
+                            if ((chemin3.Count > 0) && (!chemin3.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                            { chemin3.Add(caseActuelle); return chemin3; }
                             List<int[]> chemin4 = RechercheMotRecursif(i + 1, 1, mot.Substring(1));
-                            if (chemin4.Count > 0) { chemin4.Add(new int[] { i , 0 }); return chemin4; }
+                            if ((chemin4.Count > 0) && (!chemin4.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                            { chemin4.Add(caseActuelle); return chemin4; }
                             List<int[]> chemin5 = RechercheMotRecursif(i + 1, 0, mot.Substring(1));
-                            if (chemin5.Count > 0) { chemin5.Add(new int[] { i , 0 }); return chemin5; }
+                            if ((chemin5.Count > 0) && (!chemin5.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                            { chemin5.Add(caseActuelle); return chemin5; }
                         }
                     }
 
                 }
-                else 
-                    { 
-                        // Console.WriteLine("Ce mot n'existe pas");
-                    }
-                
+                else
+                {
+                    // Console.WriteLine("Ce mot n'existe pas");
+                }
+
             }
             return new List<int[]>();
         }
@@ -240,23 +246,31 @@ namespace motsglisses
                 {
                     if (mot.Length > 1)
                     {
-                       
+                        int[] caseActuelle = new int[] { col, lig };
                         List<int[]> chemin1 = RechercheMotRecursif(col - 1, lig, mot.Substring(1));
-                        if (chemin1.Count > 0) { chemin1.Add(new int[] { col , lig }); return chemin1; }
+                        if ((chemin1.Count > 0) && (!chemin1.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                        { chemin1.Add(caseActuelle); return chemin1; }
                         List<int[]> chemin2 = RechercheMotRecursif(col + 1, lig, mot.Substring(1));
-                        if (chemin2.Count > 0) { chemin2.Add(new int[] { col, lig }); return chemin2; }
+                        if ((chemin2.Count > 0) && (!chemin2.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                        { chemin2.Add(caseActuelle); return chemin2; }
                         List<int[]> chemin3 = RechercheMotRecursif(col, lig - 1, mot.Substring(1));
-                        if (chemin3.Count > 0) { chemin3.Add(new int[] { col, lig }); return chemin3; }
+                        if ((chemin3.Count > 0) && (!chemin3.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                        { chemin3.Add(caseActuelle); return chemin3; }
                         List<int[]> chemin4 = RechercheMotRecursif(col, lig + 1, mot.Substring(1));
-                        if (chemin4.Count > 0) { chemin4.Add(new int[] { col, lig }); return chemin4; }
+                        if ((chemin4.Count > 0) && (!chemin4.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                        { chemin4.Add(caseActuelle); return chemin4; }
                         List<int[]> chemin5 = RechercheMotRecursif(col - 1, lig + 1, mot.Substring(1));
-                        if (chemin5.Count > 0) { chemin5.Add(new int[] { col, lig }); return chemin5; }
+                        if ((chemin5.Count > 0) && (!chemin5.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                        { chemin5.Add(caseActuelle); return chemin5; }
                         List<int[]> chemin6 = RechercheMotRecursif(col + 1, lig + 1, mot.Substring(1));
-                        if (chemin6.Count > 0) { chemin6.Add(new int[] { col, lig }); return chemin6; }
+                        if ((chemin6.Count > 0) && (!chemin6.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                        { chemin6.Add(caseActuelle); return chemin6; }
                         List<int[]> chemin7 = RechercheMotRecursif(col - 1, lig - 1, mot.Substring(1));
-                        if (chemin7.Count > 0) { chemin7.Add(new int[] { col, lig }); return chemin7; }
+                        if ((chemin7.Count > 0) && (!chemin7.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                        { chemin7.Add(caseActuelle); return chemin7; }
                         List<int[]> chemin8 = RechercheMotRecursif(col + 1, lig - 1, mot.Substring(1));
-                        if (chemin8.Count > 0) { chemin8.Add(new int[] { col, lig}); return chemin8; }
+                        if ((chemin8.Count > 0) && (!chemin8.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                        { chemin8.Add(caseActuelle); return chemin8; }
                         
                     }
                     else

@@ -89,7 +89,7 @@ namespace motsglisses
                             joueurCourant.Add_Mot(mot);
                             joueurCourant.Add_Score(score);
                             plateau.Maj_Plateau(cheminMot);
-                            Console.WriteLine($"Mot valide ! Score du tour : {score}, Nouveau Score de {joueurCourant.nom} : {joueurCourant.score}\n");
+                            Console.WriteLine($"{mot} est un mot valide ! Score du tour : {score}, Nouveau Score de {joueurCourant.nom} : {joueurCourant.score}\n");
                             // Passer au joueur suivant
                             tourActuel++;
                             tempsRestant = dureeTour;
