@@ -49,7 +49,7 @@ namespace motsglisses
                         jeu = new Jeu();
                         longueur = 8;
                         hauteur = 8;
-                        Console.Write("Dimension horizontale du plateau (>=5) (ENTER = 8) :");
+                        Console.Write("Dimension horizontale du plateau (entre 5 et 10) (ENTER = 8) :");
                         userInput = Console.ReadLine();
                         if (((!int.TryParse(userInput, out longueur)) && (userInput != "")) || ((longueur>0) && (longueur<5)) || (longueur>10))
                             Console.WriteLine("Dimension invalide !");
