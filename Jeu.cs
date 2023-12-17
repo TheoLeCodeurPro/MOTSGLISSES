@@ -19,7 +19,7 @@ namespace motsglisses
 
         private List<int[]> cheminMot;
 
-        public Jeu(int tempsParTour = 120, int tempsTotal = 600)
+        public Jeu()
         {
             this.tourActuel = 1;
             this.joueurs = new List<Joueur>();
