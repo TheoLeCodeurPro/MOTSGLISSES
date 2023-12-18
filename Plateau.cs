@@ -239,6 +239,8 @@ namespace motsglisses
         /// <returns> Retourne une liste des coordonnées du chemin qui decrive le mot </returns>
         public List<int[]> Recherche_Mot(string mot)
         {
+            bool found;
+
             if (mot.Length > 0)
             {
                 if (dictionnaire.RechDichoRecursif(mot))
@@ -249,21 +251,16 @@ namespace motsglisses
                         {
                             int[] caseActuelle = new int[] { i, 0 };
                             List<int[]> cheminForward = new List<int[]> { caseActuelle };
-                            List<int[]> chemin1 = RechercheMotRecursif(i - 1, 0, mot.Substring(1), cheminForward);
-                            if (chemin1.Count > 0) 
-                                return cheminForward;
-                            List<int[]> chemin2 = RechercheMotRecursif(i - 1, 1, mot.Substring(1), cheminForward);
-                            if (chemin2.Count > 0) 
-                                return cheminForward;
-                            List<int[]> chemin3 = RechercheMotRecursif(i, 1, mot.Substring(1), cheminForward);
-                            if (chemin3.Count > 0) 
-                                return cheminForward;
-                            List<int[]> chemin4 = RechercheMotRecursif(i + 1, 1, mot.Substring(1), cheminForward);
-                            if (chemin4.Count > 0) 
-                                return cheminForward;
-                            List<int[]> chemin5 = RechercheMotRecursif(i + 1, 0, mot.Substring(1), cheminForward);
-                            if (chemin5.Count > 0) 
-                                return cheminForward;
+                            found = RechercheMotRecursif(i - 1, 0, mot.Substring(1), cheminForward);
+                            if (found) return cheminForward;
+                            found = RechercheMotRecursif(i - 1, 1, mot.Substring(1), cheminForward);
+                            if (found) return cheminForward;
+                            found = RechercheMotRecursif(i, 1, mot.Substring(1), cheminForward);
+                            if (found) return cheminForward;
+                            found = RechercheMotRecursif(i + 1, 1, mot.Substring(1), cheminForward);
+                            if (found) return cheminForward;
+                            found = RechercheMotRecursif(i + 1, 0, mot.Substring(1), cheminForward);
+                            if (found) return cheminForward;
                             cheminForward = new List<int[]>();
                         }
                     }
@@ -280,9 +277,11 @@ namespace motsglisses
         /// <param name="lig"> Indice de la ligne où se trouve la lettre </param>
         /// <param name="mot"> Mot que l'on essaye de trouver sur le plateau </param>
         /// <param name="cheminForward"> Liste des coordonnées du chemin que l'on a fais </param>
-        /// <returns></returns>
-        private List<int[]> RechercheMotRecursif(int col, int lig, string mot, List<int[]> cheminForward)
+        /// <returns> Retourne si le mot a été trouvé (bool) </returns>
+        private bool RechercheMotRecursif(int col, int lig, string mot, List<int[]> cheminForward)
         {
+            bool found = false;
+
             if ((col >= 0) && (lig >= 0) && (col < longueur) && (lig < hauteur)) 
             {
                 int[] caseActuelle = new int[] { col, lig };
@@ -291,64 +290,42 @@ namespace motsglisses
                     cheminForward.Add(caseActuelle);
                     if (mot.Length > 1)
                     {
-                        List<int[]> chemin1 = RechercheMotRecursif(col - 1, lig, mot.Substring(1), cheminForward);
-                        if (chemin1.Count > 0)
-                        { 
-                            chemin1.Add(caseActuelle); 
-                            return chemin1; 
-                        }
-                        List<int[]> chemin2 = RechercheMotRecursif(col + 1, lig, mot.Substring(1), cheminForward);
-                        if (chemin2.Count > 0)
-                        { 
-                            chemin2.Add(caseActuelle); 
-                            return chemin2; 
-                        }
-                        List<int[]> chemin3 = RechercheMotRecursif(col, lig - 1, mot.Substring(1), cheminForward);
-                        if (chemin3.Count > 0)
-                        { 
-                            chemin3.Add(caseActuelle); 
-                            return chemin3; 
-                        }
-                        List<int[]> chemin4 = RechercheMotRecursif(col, lig + 1, mot.Substring(1), cheminForward);
-                        if (chemin4.Count > 0) 
-                        { 
-                            chemin4.Add(caseActuelle); 
-                            return chemin4; 
-                        }
-                        List<int[]> chemin5 = RechercheMotRecursif(col - 1, lig + 1, mot.Substring(1), cheminForward);
-                        if (chemin5.Count > 0)
-                        { 
-                            chemin5.Add(caseActuelle); 
-                            return chemin5; 
-                        }
-                        List<int[]> chemin6 = RechercheMotRecursif(col + 1, lig + 1, mot.Substring(1), cheminForward);
-                        if (chemin6.Count > 0)
-                        { 
-                            chemin6.Add(caseActuelle); 
-                            return chemin6; 
-                        }
-                        List<int[]> chemin7 = RechercheMotRecursif(col - 1, lig - 1, mot.Substring(1), cheminForward);
-                        if (chemin7.Count > 0) 
-                        { 
-                            chemin7.Add(caseActuelle); 
-                            return chemin7; 
-                        }
-                        List<int[]> chemin8 = RechercheMotRecursif(col + 1, lig - 1, mot.Substring(1), cheminForward);
-                        if (chemin8.Count > 0) 
-                        { 
-                            chemin8.Add(caseActuelle); 
-                            return chemin8; 
-                        }
+                        for (int i = -1; i<=1; i++)
+                            for (int j = -1; j<=1; j++)
+                                if ((i!=0) || (j!=0))
+                                {
+                                    found = RechercheMotRecursif(col+i, lig+j, mot.Substring(1), cheminForward);
+                                    if (found) return found;
+                                }
+
+
+                        /*
+                        found = RechercheMotRecursif(col - 1, lig, mot.Substring(1), cheminForward);
+                        if (found) return found;
+                        found = RechercheMotRecursif(col + 1, lig, mot.Substring(1), cheminForward);
+                        if (found) return found;
+                        found = RechercheMotRecursif(col, lig - 1, mot.Substring(1), cheminForward);
+                        if (found) return found;
+                        found = RechercheMotRecursif(col, lig + 1, mot.Substring(1), cheminForward);
+                        if (found) return found;
+                        found = RechercheMotRecursif(col - 1, lig + 1, mot.Substring(1), cheminForward);
+                        if (found) return found;
+                        found = RechercheMotRecursif(col + 1, lig + 1, mot.Substring(1), cheminForward);
+                        if (found) return found;
+                        found = RechercheMotRecursif(col - 1, lig - 1, mot.Substring(1), cheminForward);
+                        if (found) return found;
+                        found = RechercheMotRecursif(col + 1, lig - 1, mot.Substring(1), cheminForward);
+                        if (found) return found;
+                        */
                         cheminForward.RemoveAt(cheminForward.Count - 1);
                     }
                     else
                     {
-                        List<int[]> chemin0 = new List<int[]> { caseActuelle };
-                        return chemin0;
+                        return true;
                     }
                 }
             }
-            return new List<int[]>();
+            return false;
 
         }
 
@@ -441,6 +418,59 @@ namespace motsglisses
             };
         }
 
+
+        /// <summary>
+        /// Permet de rechercher toutes les solutionssqur le plateau
+        /// <returns> Retourne une liste des mots solutions </returns>
+        public List<string> Recherche_Solutions()
+        {
+            List<string> solutions = new List<string>();
+
+            for (int i = 0; i < longueur; i++)
+            {
+                int[] caseActuelle = new int[] { i, 0 };
+                List<int[]> cheminForward = new List<int[]> { caseActuelle };
+                RechercheSolRecursif(i - 1, 0, plateau[i, 0].ToString(), cheminForward, solutions);
+                RechercheSolRecursif(i - 1, 1, plateau[i, 0].ToString(), cheminForward, solutions);
+                RechercheSolRecursif(i, 1, plateau[i, 0].ToString(), cheminForward, solutions);
+                RechercheSolRecursif(i + 1, 1, plateau[i, 0].ToString(), cheminForward, solutions);
+                RechercheSolRecursif(i + 1, 0, plateau[i, 0].ToString(), cheminForward, solutions);
+            }
+            return solutions.Distinct().ToList();
+        }
+
+        /// <summary>
+        /// Permet de la recherche récursive des mot solution à partir du début du mot et d'un certaine case
+        /// </summary>
+        /// <param name="col"> Indice de la colonne où on continue la recherche des solutions </param>
+        /// <param name="lig"> Indice de la ligne où on continue la recherche des solutions </param>
+        /// <param name="mot"> Début du mot que l'on essaye de trouver sur le plateau </param>
+        /// <param name="cheminForward"> Liste des coordonnées du chemin que l'on a fais </param>
+        /// <returns></returns>
+        private void RechercheSolRecursif(int col, int lig, string mot, List<int[]> cheminForward, List<string> solutions)
+        {
+            if ((col >= 0) && (lig >= 0) && (col < longueur) && (lig < hauteur))
+            {
+                int[] caseActuelle = new int[] { col, lig };
+                mot = mot + plateau[col, lig];
+                if ((dictionnaire.RechDichoRecursif(mot, mot.Length)) && (!cheminForward.Any(element => Enumerable.SequenceEqual(element, caseActuelle))))
+                {
+                    if (dictionnaire.RechDichoRecursif(mot))
+                    {
+                        solutions.Add(mot);
+                    }
+                    cheminForward.Add(caseActuelle);
+                    for (int i = -1; i <= 1; i++)
+                        for (int j = -1; j <= 1; j++)
+                            if ((i != 0) || (j != 0))
+                            {
+                                RechercheSolRecursif(col + i, lig + j, mot, cheminForward, solutions);
+                            }
+                cheminForward.RemoveAt(cheminForward.Count - 1);
+                }
+                else return; 
+            }
+            return;
+        }
     }
 }
-

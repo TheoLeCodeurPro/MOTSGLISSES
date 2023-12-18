@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 
 public class Dictionnaire
 {
@@ -72,8 +73,9 @@ public class Dictionnaire
     /// Permet de rechercher un mot dans le dictionnaire pour vérifier si il existe
     /// </summary>
     /// <param name="mot"> C'est le mot que l'on essaye de chercher </param>
+    /// <param name="longMax"> Parametre facultatif qui permet de chercher les mots du dictionnaire commencant par mot sur cette longueur </param>
     /// <returns> Retourne true si le mot existe et retourne false si le mot n'est pas dans le dictionnaire </returns>
-    public bool RechDichoRecursif(string mot)
+    public bool RechDichoRecursif(string mot, int longMax = 1000)
     {
         char premiereLettre = mot[0];
         if (this.dictionnaire.ContainsKey(premiereLettre))
@@ -81,7 +83,7 @@ public class Dictionnaire
             List<string> mots = this.dictionnaire[premiereLettre];
             int debut = 0;
             int fin = mots.Count - 1;
-            return RechRec(mot, debut, fin, mots);
+            return RechRec(mot.Substring(0, Math.Min(longMax, mot.Length)), debut, fin, mots, longMax);
         }
         return false;
     }
@@ -95,12 +97,12 @@ public class Dictionnaire
     /// <param name="fin"> Indice de l'endroit où se fini la recherche </param>
     /// <param name="mots"> C'est la liste des mots commençant par la même lettre que le mot que l'on cherche </param>
     /// <returns> Retourne true si le mot est dans le dictionnaire </returns>
-    private bool RechRec(string mot, int debut, int fin, List<string> mots)
+    private bool RechRec(string mot, int debut, int fin, List<string> mots, int longMax = 1000)
     {
         if (debut <= fin)
         {
             int milieu = (debut + fin) / 2;
-            int comparaison = mots[milieu].CompareTo(mot);
+            int comparaison = mots[milieu].Substring(0, Math.Min(longMax, mots[milieu].Length)).CompareTo(mot);
             if (comparaison == 0)
             {
                 return true;

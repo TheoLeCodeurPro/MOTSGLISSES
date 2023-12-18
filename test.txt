@@ -1,0 +1,9 @@
+8,8
+A     GH
+EB    KO
+PJ    RV
+UTC   MM
+IES   JN
+SIC   GR
+RDZDEFCP
+CRCTEAUS

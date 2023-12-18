@@ -16,7 +16,8 @@ namespace motsglisses
         static int dureeTour; // duree du tour
         static int tempsRestant;  // temps restant dans le tour
         private int tourActuel; // Numero du tour
-
+        private List<string> solutions; // Mots possibles
+        private bool triche; // Si le joueur à utilisé la commande ?
         private List<int[]> cheminMot;
 
 
@@ -71,37 +72,47 @@ namespace motsglisses
             // Initialiser le temps restant (30 secondes / tour)
             dureeTour = 30;
             tempsRestant = dureeTour;
+            solutions = plateau.Recherche_Solutions();
+            triche = false;
 
-            while (( duree >= 0) && plateau.LettresRestantes() && (mot != "STOPJEU"))
+            while (( duree >= 0) && plateau.LettresRestantes() && (mot != "STOPJEU") && (solutions.Count > 0))
             {
-                Console.SetCursorPosition(0, 2);
+                Console.SetCursorPosition(0, 4);
                 Console.WriteLine($"Tour {tourActuel}");
                 Joueur joueurCourant = joueurs[(tourActuel - 1) % 2];
 
                 // Afficher l'état du plateau
-                Console.SetCursorPosition(0, 3);
+                Console.SetCursorPosition(0, 5);
                 Console.WriteLine("Plateau actuel :\n" + plateau.toString());
 
                 // Afficher l'état du joueur
                 Console.WriteLine(joueurCourant.toString()+"\n");
 
+                solutions = plateau.Recherche_Solutions();
+
                 // Demander au joueur de saisir un mot
-                Console.Write("Saisissez un mot (STOPJEU pour arreter le jeu en cours): ");
+                Console.Write("Saisissez un mot (? pour de l'aide => Score pour le joueur = 0, STOPJEU pour arreter le jeu en cours): ");
                 mot = Console.ReadLine().ToUpper();
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
-                if (mot != "STOPJEU")
+
+                if ((mot != "STOPJEU") && (mot != "?"))
+                {
                     if (tempsRestant >= 0)
                     {
                         cheminMot = plateau.Recherche_Mot(mot);
                         // Vérifier si le mot est valide
-                        if (!joueurCourant.Contient(mot) && (cheminMot.Count>0))
+                        if (!joueurCourant.Contient(mot) && (cheminMot.Count > 0))
                         {
                             // Mettre à jour le score du joueur et le plateau
                             int score = CalculerScore(mot);
                             joueurCourant.Add_Mot(mot);
-                            joueurCourant.Add_Score(score);
+                            if (!triche)
+                                joueurCourant.Add_Score(score);
                             plateau.Maj_Plateau(cheminMot);
+                            solutions = plateau.Recherche_Solutions();
+                            triche = false;
+
                             Console.WriteLine($"{mot} est un mot valide ! Score du tour : {score}, Nouveau Score de {joueurCourant.nom} : {joueurCourant.score}\n");
                             // Passer au joueur suivant
                             tourActuel++;
@@ -115,10 +126,16 @@ namespace motsglisses
                     }
                     else
                     {
-                    //timer.Dispose();
-                    tourActuel++;
-                    tempsRestant = dureeTour;
+                        //timer.Dispose();
+                        tourActuel++;
+                        tempsRestant = dureeTour;
                     }
+                }     
+                else if (mot == "?")
+                {
+                    AfficherSolutions(solutions);
+                    triche = true;
+                }
             }
 
             // Afficher le résultat final
@@ -180,6 +197,10 @@ namespace motsglisses
         /// </summary>
         private void AfficherResultatFinal()
         {
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            if (solutions.Count == 0)
+                Console.Write("Plus de solutions ! ");
             Console.WriteLine("Partie terminée ! Résultats finaux :");
             foreach (Joueur joueur in joueurs)
             {
@@ -190,6 +211,31 @@ namespace motsglisses
             else Console.WriteLine($"{joueurs[0].nom} et {joueurs[1].nom} sont ex aequo !");
             timer.Dispose();
             Console.ReadLine(); 
+        }
+
+        /// <summary>
+        /// Permet d'afficher les mots solutions (commande ?)
+        /// </summary>
+        /// <param name="solutions"> Listes des solutions possibles </param>
+        private void AfficherSolutions(List<string> solutions)
+        {
+            if (solutions.Count == 0)
+            {
+                Console.WriteLine("\nPas de solutions ! (tapez ENTER pour terminer)");
+                Console.ReadLine();
+                return;
+            }
+            else
+            {
+                string message = "Solutions : ";
+                foreach (string solution in solutions)
+                {
+                    message = message + solution+"("+ CalculerScore(solution) + ") ,";
+                }
+                Console.WriteLine(message.TrimEnd(','));
+            }
+
+
         }
     }
 }
