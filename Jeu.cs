@@ -70,7 +70,7 @@ namespace motsglisses
             timer = new Timer(TimerCallback, null, 0, 1000); // 1000 ms = 1 seconde
             string mot = "";
             // Initialiser le temps restant (30 secondes / tour)
-            dureeTour = 30;
+            dureeTour = 40;
             tempsRestant = dureeTour;
             solutions = plateau.Recherche_Solutions();
             triche = false;
